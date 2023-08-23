@@ -134,6 +134,9 @@ body {
 .nav__burger {
   width: 20px;
   height: 36px;
+  background-color: #181818;
+  border: none;
+  box-sizing: border-box;
   padding: 13px 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -425,6 +428,13 @@ body {
   margin-right: 17px;
 }
 
+.track__title-image_loading {
+  width: 51px;
+  height: 51px;
+  background-color: #313131;
+  margin-right: 17px;
+}
+
 .track__title-svg {
   width: 18px;
   height: 17px;
@@ -438,6 +448,12 @@ body {
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
+}
+
+.track__title-text_loading {
+  width: 356px;
+  height: 19px;
+  background-color: #313131;
 }
 
 .track__title-span {
@@ -458,6 +474,14 @@ body {
   justify-content: flex-start;
 }
 
+.track__author_loading {
+  width: 271px;
+  height: 19px;
+  background-color:#313131;
+  /* position: relative;
+    left: -95px; */
+}
+
 .track__author-link {
   font-style: normal;
   font-weight: 400;
@@ -465,6 +489,12 @@ body {
   line-height: 24px;
   color: #ffffff;
   text-align: left;
+}
+
+.track-play__author-link_loading {
+  width: 271px;
+  height: 19px;
+  background-color:#313131;
 }
 
 .track__album {
@@ -477,6 +507,14 @@ body {
   font-size: 16px;
   line-height: 24px;
   color: #696969;
+}
+
+.track__album-link_loading {
+  width: 305px;
+  height: 19px;
+  background-color:#313131;
+  /* position: relative;
+    left: -140px; */
 }
 
 .track__time-svg {
@@ -575,6 +613,12 @@ body {
 .sidebar__img {
   width: 100%;
   height: auto;
+}
+
+.sidebar__img_loading {
+  width: 250px;
+  height: 150px;
+  background: #313131;
 }
 
 .bar {

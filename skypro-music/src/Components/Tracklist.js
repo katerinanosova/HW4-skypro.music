@@ -1,6 +1,6 @@
 import { GetTracks } from "./Track";
 
-export default function Tracklist() {
+export default function Tracklist({ isLoading }) {
     return (
         <div className="main__centerblock centerblock">
         <div className="centerblock__search search">
@@ -37,7 +37,7 @@ export default function Tracklist() {
             </div>
           </div>
           <div className="content__playlist playlist">
-            <GetTracks />
+            <GetTracks isLoading={isLoading}/>
           </div>
         </div>
       </div>
