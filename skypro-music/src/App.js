@@ -32,7 +32,7 @@ function App() {
       <Tracklist isLoading={loading}/>
       <Sidebar isLoading={loading}/>
     </main>
-    <AudioPlayer />
+    <AudioPlayer isLoading={loading} />
     <footer className="footer" />
   </div>
 </div>

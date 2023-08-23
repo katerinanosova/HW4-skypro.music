@@ -497,6 +497,12 @@ body {
   background-color:#313131;
 }
 
+.player__author-link_loading {
+  width: 59px;
+  height: 15px;
+  background-color:#313131;
+}
+
 .track__album {
   width: 245px;
 }
