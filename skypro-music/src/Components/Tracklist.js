@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Filter from "./FilterAuthor";
+import Filter from "./Filter";
 import { GetTracks } from "./Track";
 
 
