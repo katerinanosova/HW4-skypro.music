@@ -1,4 +1,4 @@
-export default function AudioPlayer() {
+export default function AudioPlayer({ isLoading }) {
     return (
         <div className="bar">
       <div className="bar__content">
@@ -40,14 +40,18 @@ export default function AudioPlayer() {
                   </svg>
                 </div>
                 <div className="track-play__author">
-                  <a className="track-play__author-link" href="http://">
-                    Ты та...
-                  </a>
+                  {isLoading
+                  ? <div className="player__author-link_loading" />
+                  : <a className="track-play__author-link" href="http://">
+                  Ты та...
+                </a>}
                 </div>
                 <div className="track-play__album">
-                  <a className="track-play__album-link" href="http://">
-                    Баста
-                  </a>
+                  {isLoading
+                  ? <div className="player__author-link_loading" />
+                  : <a className="track-play__album-link" href="http://">
+                  Баста
+                </a>}
                 </div>
               </div>
               <div className="track-play__like-dis">

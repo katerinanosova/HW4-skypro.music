@@ -1,7 +1,7 @@
 import { Playlist } from "./Playlist";
 
 
-export default function Sidebar() {
+export default function Sidebar({ isLoading }) {
     return (
         <div className="main__sidebar sidebar">
         <div className="sidebar__personal">
@@ -14,7 +14,7 @@ export default function Sidebar() {
         </div>
         <div className="sidebar__block">
           <div className="sidebar__list">
-            <Playlist />
+            <Playlist isLoading={isLoading}/>
           </div>
         </div>
       </div>

@@ -13,16 +13,16 @@ export const playlists = [{
 }]
 
 
-export function Playlist() {
+export function Playlist({ isLoading }) {
 
     const playlistItems = playlists.map(playlistItem => 
         <div key={playlistItem.id} className="sidebar__item">
             <a className="sidebar__link" href="http://">
-                <img
+                {isLoading ? <div className="sidebar__img_loading" /> : <img
                   className="sidebar__img"
                   src={playlistItem.img}
                   alt={playlistItem.name}
-                />
+                />}
             </a>
         </div>
         )

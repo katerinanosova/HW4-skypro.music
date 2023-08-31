@@ -1,15 +1,24 @@
+import { useState } from "react";
+
 export default function NavMenu() {
+  const [open, setOpen] = useState(false);
+
+  function toggleOpen() {
+    setOpen(!open);
+  }
+
     return (
         <nav className="main__nav nav">
         <div className="nav__logo logo">
           <img className="logo__image" src="img/logo.png" alt="logo" />
         </div>
-        <div className="nav__burger burger">
+        <button type="button" className="nav__burger burger" onClick={toggleOpen}>
           <span className="burger__line" />
           <span className="burger__line" />
           <span className="burger__line" />
-        </div>
-        <div className="nav__menu menu">
+        </button>
+
+        {open ? <div className="nav__menu menu">
           <ul className="menu__list">
             <li className="menu__item">
               <a href="http://" className="menu__link">
@@ -27,7 +36,9 @@ export default function NavMenu() {
               </a>
             </li>
           </ul>
-        </div>
+        </div> : null}
+        
+        
       </nav>
     );
 }
