@@ -1,3 +1,5 @@
+import './Filter.css';
+
 export default function Filter ({ type, filterName, isActive, onShow, onHide }) {
     
     const filterList = filterName.map((item, index) =>

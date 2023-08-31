@@ -1,5 +1,7 @@
 import { Playlist } from "./Playlist";
 
+import './Sidebar.css';
+
 
 export default function Sidebar({ isLoading }) {
     return (

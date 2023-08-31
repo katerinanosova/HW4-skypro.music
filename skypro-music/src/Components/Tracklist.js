@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Filter from "./Filter";
 import { GetTracks } from "./Track";
+import './Tracklist.css';
 
 
 const genres = ['Рок', 'Техно', 'Поп', 'Металл', 'Панк-рок'];

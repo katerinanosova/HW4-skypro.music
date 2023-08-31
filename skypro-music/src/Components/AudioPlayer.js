@@ -1,3 +1,6 @@
+
+import './AudioPlayer.css';
+
 export default function AudioPlayer({ isLoading }) {
     return (
         <div className="bar">

@@ -1,3 +1,5 @@
+import './Playlist.css';
+
 export const playlists = [{
     id: 0,
     name: "day's playlist",

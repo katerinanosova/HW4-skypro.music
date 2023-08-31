@@ -1,3 +1,4 @@
+import './Track.css';
 
 export const tracks = [{
     id: 0,
@@ -100,13 +101,7 @@ export function GetTracks({ isLoading }) {
             {track.author}
             </a>
           </div> }
-          {/* <div className="track__author">
-            {isLoading 
-            ? <div className="track-play__author-link_loading" /> 
-            : <a className="track__author-link" href="http://">
-            {track.author}
-            </a>}
-          </div> */}
+          
           <div className="track__album">
             {isLoading
             ? <div className="track__album-link_loading" />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './NavMenu.css';
 
 export default function NavMenu() {
   const [open, setOpen] = useState(false);
