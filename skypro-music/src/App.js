@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import AudioPlayer from "./Components/AudioPlayer";
+import AudioPlayer from "./Components/Audioplayer/AudioPlayer";
 import NavMenu from "./Components/NavMenu/NavMenu";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Tracklist from "./Components/Tracklist";
