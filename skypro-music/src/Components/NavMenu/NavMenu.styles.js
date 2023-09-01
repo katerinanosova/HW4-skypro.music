@@ -1,24 +1,20 @@
-.main__nav {
-  width: 244px;
-  background-color: #181818;
-  padding: 20px 0 20px 36px;
-}
+import { styled } from 'styled-components';
 
-.nav__logo {
+export const MainNav = styled.nav`
+width: 244px;
+background-color: #181818;
+padding: 20px 0 20px 36px;
+`
+
+export const NavLogo = styled.div`
   width: 113.33px;
   height: 43px;
   padding: 13px 0 13px 0;
   background-color: transparent;
   margin-bottom: 20px;
-}
+`
 
-.logo__image {
-  width: 113.33px;
-  height: 17px;
-  color: #181818;
-}
-
-.nav__burger {
+export const NavBurger = styled.button`
   width: 20px;
   height: 36px;
   background-color: #181818;
@@ -35,32 +31,40 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-}
+`
 
-.burger__line {
+export const LogoImage = styled.img`
+  width: 113.33px;
+  height: 17px;
+  color: #181818;
+`
+
+export const BurgerLine = styled.span`
   display: inline-block;
   width: 100%;
   height: 1px;
   background-color: #d3d3d3;
-}
+`
 
-.nav__menu {
+export const NavMenu = styled.div`
   display: block;
   visibility: visible;
-}
+`
 
-.menu__list {
-  padding: 18px 0 10px 0;
-}
+export const MenuList = styled.ul`
+ padding: 18px 0 10px 0;
+`
 
-.menu__item {
+export const MenuItem = styled.li`
   padding: 5px 0;
   margin-bottom: 16px;
-}
+`
 
-.menu__link {
+export const MenuLink = styled.a`
   color: #ffffff;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-}
+`
+
+
