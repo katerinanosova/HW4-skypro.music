@@ -3,7 +3,7 @@ import "./App.css";
 import AudioPlayer from "./Components/Audioplayer/AudioPlayer";
 import NavMenu from "./Components/NavMenu/NavMenu";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import Tracklist from "./Components/Tracklist";
+import Tracklist from "./Components/Tracklist/Tracklist";
 
 function delay(interval) {
   return new Promise((resolve) => {
