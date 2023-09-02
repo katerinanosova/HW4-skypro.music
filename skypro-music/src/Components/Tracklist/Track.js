@@ -1,4 +1,5 @@
-import './Track.css';
+import * as S from './Track.styled';
+
 
 export const tracks = [{
     id: 0,
@@ -75,48 +76,48 @@ export const tracks = [{
 
 export function GetTracks({ isLoading }) {
     const trackList = tracks.map(track => 
-        <div key={track.id} className="playlist__item">
-        <div className="playlist__track track">
-          <div className="track__title">
+        <S.PlaylistItem key={track.id}>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
           <div>
-            {isLoading ? <div className="track__title-image_loading" /> : <div className="track__title-image">
-             <svg className="track__title-svg" alt="music">
+            {isLoading ? <S.TrackTitleImageLoading /> : <S.TrackTitleImage>
+             <S.TrackTitleSvg alt="music">
                <use xlinkHref="img/icon/sprite.svg#icon-note"/>
-             </svg>
-           </div>}
+             </S.TrackTitleSvg>
+           </S.TrackTitleImage>}
           </div>
-          {isLoading ? <div className="track__title-text_loading" /> : <div className="track__title-text">
-              <a className="track__title-link" href="http://">
+          {isLoading ? <S.TrackTitleTextLoading /> : <S.TrackTitleText>
+            <S.TrackTitleLink href="http://">
                 {track.title} 
-                <span className="track__title-span">
+                <S.TrackTitleSpan>
                 {track.version ? track.version : ''}
-                </span>
-              </a>
-            </div> }
-          </div>
+                </S.TrackTitleSpan>
+            </S.TrackTitleLink>
+          </S.TrackTitleText> }
+          </S.TrackTitle>
           {isLoading 
-          ? <div className="track__author_loading" /> 
-          : <div className="track__author">
-            <a className="track__author-link" href="http://">
+          ? <S.TrackAuthorLoading /> 
+          : <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
             {track.author}
-            </a>
-          </div> }
+            </S.TrackAuthorLink>
+          </S.TrackAuthor> }
           
-          <div className="track__album">
+          <S.TrackAlbum>
             {isLoading
-            ? <div className="track__album-link_loading" />
-            : <a className="track__album-link" href="http://">
+            ? <S.TrackAlbumLinkLoading />
+            : <S.TrackAlbumLink href="http://">
               {track.album}
-              </a>}     
-          </div>
-          {isLoading ? '' : <div className="track__time">
-            <svg className="track__time-svg" alt="time">
+              </S.TrackAlbumLink>}     
+          </S.TrackAlbum>
+          {isLoading ? '' : <S.TrackTime>
+            <S.TrackTimeSvg alt="time">
               <use xlinkHref="img/icon/sprite.svg#icon-like" />
-            </svg>
-            <span className="track__time-text">{track.time}</span>
-          </div> }         
-        </div>
-      </div> 
+            </S.TrackTimeSvg>
+            <S.TrackTimeText>{track.time}</S.TrackTimeText>
+          </S.TrackTime> }         
+        </S.PlaylistTrack>
+      </S.PlaylistItem> 
         )
         return (
             trackList

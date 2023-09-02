@@ -35,7 +35,7 @@ border: 1px solid #ffffff;
 border-radius: 60px;
 padding: 6px 20px;
 text-align: center;
-color: ${({ $isActive }) => ($isActive ? '#9A48F1' : '#ffffff')}
+color: ${({ $isActive }) => ($isActive ? '#9A48F1' : '#ffffff')};
 appearance: none;
 width: 144px;
 height: 39px;
