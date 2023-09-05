@@ -15,10 +15,3 @@ export default function Filter ({ type, filterName, isActive, onShow, onHide }) 
             </S.FilterOption> : ''}
         </S.FilterButton>)  
 }
-
-  /* className={isActive ? "filter__button filter__button_active button-author" : "filter__button button-author _btn-text"} */
-
-//   .filter__button_active {
-//     color: #9A48F1;
-//     border: 1px solid #9A48F1;
-//   }

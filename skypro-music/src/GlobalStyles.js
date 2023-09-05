@@ -25,6 +25,10 @@ ul li {
   list-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 @font-face {
   font-family: "StratosSkyeng";
   src: local("StratosSkyeng"), local("StratosSkyeng"),
