@@ -1,4 +1,29 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
+
+const btn = css`
+cursor: pointer;
+`
+
+const btnIconSvg = css`
+&:hover {
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+}
+&:active {
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
+`
+
+const btnIconActive = css`
+&:active {
+    fill: #696969;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
+`
 
 
 export const Bar = styled.div`
@@ -107,6 +132,7 @@ display: flex;
 -ms-flex-align: center;
 align-items: center;
 margin-right: 23px;
+${btn}
 `
 
 export const PlayerBtnNext = styled.div`
@@ -130,6 +156,7 @@ display: flex;
 -ms-flex-align: center;
 align-items: center;
 margin-right: 24px;
+${btnIconActive}
 `
 
 export const PlayerBtnShuffle = styled.div`
@@ -140,6 +167,7 @@ display: flex;
 -webkit-box-align: center;
 -ms-flex-align: center;
 align-items: center;
+${btnIconActive}
 `
 
 export const PlayerBtnPrevSvg = styled.svg`
@@ -165,6 +193,7 @@ width: 18px;
 height: 12px;
 fill: transparent;
 stroke: #696969;
+${btnIconSvg}
 `
 
 export const PlayerBtnShuffleSvg = styled.svg`
@@ -172,6 +201,7 @@ width: 19px;
 height: 12px;
 fill: transparent;
 stroke: #696969;
+${btnIconSvg}
 `
 
 export const TrackPlayContain = styled.div`
@@ -265,11 +295,13 @@ color: #ffffff;
 
 export const TrackPlayLike = styled.div`
 padding: 5px;
+${btnIconActive}
 `
 
 export const TrackPlayDislike = styled.div`
 padding: 5px;
 margin-left: 28.5px;
+${btnIconActive}
 `
 
 export const TrackPlayLikeSvg = styled.svg`
@@ -277,6 +309,7 @@ width: 14px;
 height: 12px;
 fill: transparent;
 stroke: #696969;
+${btnIconActive}
 `
 
 export const TrackPlayDislikeSvg = styled.svg`
@@ -284,6 +317,7 @@ width: 14.34px;
 height: 13px;
 fill: transparent;
 stroke: #696969;
+${btnIconActive}
 `
 
 export const VolumeContent = styled.div`
@@ -316,8 +350,10 @@ fill: transparent;
 
 export const VolumeProgress = styled.div`
 width: 109px;
+${btn}
 `
 
 export const VolumeProgressLine = styled.input`
 width: 109px;
+${btn}
 `

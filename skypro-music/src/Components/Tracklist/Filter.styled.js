@@ -44,7 +44,13 @@ background-color: #181818;
     margin-right: 10px;
   }
 &:hover {
-  border: ${({ $isActive }) => ($isActive ? '1px solid #9A48F1' : '')};
-  color: ${({ $isActive }) => ($isActive ? '#9A48F1' : '')};
+  border: ${({ $isActive }) => ($isActive ? '1px solid #9A48F1' : '1px solid #d9b6ff')};
+  color: ${({ $isActive }) => ($isActive ? '#9A48F1' : '#d9b6ff')};
+  cursor: pointer;
+}
+&:active {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
 }
 `
