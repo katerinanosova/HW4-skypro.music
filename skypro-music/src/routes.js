@@ -18,7 +18,7 @@ export default function AppRoutes ({ user }) {
             <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/favorites" element={<Favorites />} />
-                <Route path="/categories" element={<Categories />} />
+                <Route path="/categories/:id" element={<Categories />} />
             </Route>
                                 
         </Routes>
