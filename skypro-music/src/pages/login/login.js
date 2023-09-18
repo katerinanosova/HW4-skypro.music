@@ -3,7 +3,7 @@ import * as S from './login.styled';
 
 export default function Login() {
     
-    // const userLogin = () => window.localStorage.setItem('user', true);
+    const userLogin = () => window.localStorage.setItem('user', 'gf');
     
     return (
         <div>
@@ -20,7 +20,7 @@ export default function Login() {
                         <S.ModalInputLogin type="text" name="login" placeholder="Почта" />
                         <S.ModalInput type="password" name="password" placeholder="Пароль" />
                         <S.ModalBtnEnter type="button">
-                            <S.ModalBtnEnterA to="/">Войти</S.ModalBtnEnterA>
+                            <S.ModalBtnEnterA onClick={userLogin} to="/">Войти</S.ModalBtnEnterA>
                         </S.ModalBtnEnter>
                         <S.ModalBtnSignup type="button">
                             <S.ModalBtnSignupA to="/registration">Зарегистрироваться</S.ModalBtnSignupA>

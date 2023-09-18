@@ -8,7 +8,7 @@ import MainPage from "./pages/main/main-page";
 import ProtectedRoute from "./Components/protected-route";
 
 export default function AppRoutes ({ user }) {
-    console.log(user);
+    
     return (
         <Routes>
             <Route path="/login" element={<Login />} />
