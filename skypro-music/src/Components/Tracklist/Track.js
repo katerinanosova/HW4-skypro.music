@@ -14,21 +14,22 @@ export function getTrackDuration(sec) {
 export function GetTracks({ isLoading, setLoading }) {
 
   const [tracks, setTracks] = useState([]);
+  const [getTracksError, setGetTracksError] = useState(null);
  
-  
   useEffect(() => {
-     
-    getTracksApi().then((tracksApi) => {
-    setTracks(tracksApi);
-    }).then(() => {
-      setLoading(false); 
-    });
-     
+      getTracksApi().then((tracksApi) => {
+        setTracks(tracksApi);
+      })
+      .then(() => {
+        setLoading(false); 
+      })
+      .catch((error) => {
+        setGetTracksError(error.message)
+      })
+          
   }, []);
-
   
 
-  
 
   const trackList = tracks.map(track => 
         <S.PlaylistItem key={track.id}>
@@ -75,6 +76,6 @@ export function GetTracks({ isLoading, setLoading }) {
       </S.PlaylistItem> 
         )
         return (
-            trackList
+          getTracksError || trackList
         );
 }
