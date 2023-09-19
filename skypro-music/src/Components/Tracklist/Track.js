@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getTracksApi } from '../../api';
+
 import * as S from './Track.styled';
-
-
 
 export function getTrackDuration(sec) {
   const minutes = Math.floor(sec / 60);
@@ -10,30 +7,11 @@ export function getTrackDuration(sec) {
   return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
 }
 
-
-export function GetTracks({ isLoading, setLoading }) {
-
-  const [tracks, setTracks] = useState([]);
-  const [getTracksError, setGetTracksError] = useState(null);
+export function GetTracks({ isLoading, tracks, getTracksError, setCurrentTrack }) {
  
-  useEffect(() => {
-      getTracksApi().then((tracksApi) => {
-        setTracks(tracksApi);
-      })
-      .then(() => {
-        setLoading(false); 
-      })
-      .catch((error) => {
-        setGetTracksError(error.message)
-      })
-          
-  }, []);
-  
-
-
   const trackList = tracks.map(track => 
         <S.PlaylistItem key={track.id}>
-        <S.PlaylistTrack>
+        <S.PlaylistTrack onClick={() => {setCurrentTrack(track)}}>
           <S.TrackTitle>
           <div>
             {isLoading ? <S.TrackTitleImageLoading /> : <S.TrackTitleImage>

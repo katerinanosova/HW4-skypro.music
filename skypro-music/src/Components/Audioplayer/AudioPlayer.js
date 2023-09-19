@@ -1,8 +1,10 @@
 import * as S from './AudioPlayer.styled'
 
-export default function AudioPlayer({ isLoading }) {
+export default function AudioPlayer({ isLoading, currentTrack }) {
+
     return (
-    <S.Bar>
+    <div>
+      {currentTrack ? (<S.Bar>
       <S.BarContent>
         <S.BarPlayerProgress />
         <S.BarPlayerBlock>
@@ -45,14 +47,14 @@ export default function AudioPlayer({ isLoading }) {
                   {isLoading
                   ? <S.PlayerAuthorLinkLoading />
                   : <S.TrackPlayAuthorLink href="http://">
-                  Ты та...
+                  {currentTrack.name}
                 </S.TrackPlayAuthorLink>}
                 </S.TrackPlayAuthor>
                 <S.TrackPlayAlbum>
                   {isLoading
                   ? <S.PlayerAuthorLinkLoading />
                   : <S.TrackPlayAlbumLink href="http://">
-                  Баста
+                  {currentTrack.author}
                 </S.TrackPlayAlbumLink>}
                 </S.TrackPlayAlbum>
               </S.TrackPlayContain>
@@ -88,6 +90,7 @@ export default function AudioPlayer({ isLoading }) {
           </S.BarVolumeBlock>
         </S.BarPlayerBlock>
       </S.BarContent>
-    </S.Bar>
+    </S.Bar>) : null}
+    </div>
     );
 }

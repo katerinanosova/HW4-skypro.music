@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import AudioPlayer from "../../Components/Audioplayer/AudioPlayer";
 import NavMenu from "../../Components/NavMenu/NavMenu";
 import Sidebar from "../../Components/Sidebar/Sidebar";
@@ -7,9 +7,9 @@ import GlobalStyle from "../../GlobalStyles";
 import * as S from '../../App.styled';
 
 
-export default function MainPage() {
+export default function MainPage({ loading, tracks, getTracksError, currentTrack, setCurrentTrack }) {
 
-    const [loading, setLoading] = useState(true);
+    
   
 
     return (
@@ -19,10 +19,12 @@ export default function MainPage() {
                 <S.Container>
                 <S.Main>
                     <NavMenu />
-                    <Tracklist isLoading={loading} setLoading={setLoading}/>
+                    <Tracklist isLoading={loading} tracks={tracks}
+                    getTracksError={getTracksError}
+                    setCurrentTrack={setCurrentTrack} />
                     <Sidebar isLoading={loading} />
                 </S.Main>
-                <AudioPlayer isLoading={loading} />
+                <AudioPlayer isLoading={loading} currentTrack={currentTrack} />
                 <S.Footer />
                 </S.Container>
             </S.Wrapper>
