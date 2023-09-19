@@ -10,7 +10,7 @@ const years = [2000, 2001, 2002];
 const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
 
 
-export default function Tracklist({ isLoading }) {
+export default function Tracklist({ isLoading, setLoading }) {
     
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -45,7 +45,7 @@ export default function Tracklist({ isLoading }) {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            <GetTracks isLoading={isLoading}/>
+            <GetTracks isLoading={isLoading} setLoading={setLoading}/>
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainCenterblock>

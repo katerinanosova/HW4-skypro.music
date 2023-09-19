@@ -11,16 +11,22 @@ export function getTrackDuration(sec) {
 }
 
 
-export function GetTracks({ isLoading }) {
+export function GetTracks({ isLoading, setLoading }) {
 
   const [tracks, setTracks] = useState([]);
  
-
+  
   useEffect(() => {
+     
     getTracksApi().then((tracksApi) => {
-    setTracks(tracksApi)  
+    setTracks(tracksApi);
+    }).then(() => {
+      setLoading(false); 
     });
-    }, []);
+     
+  }, []);
+
+  
 
   
 

@@ -17,7 +17,7 @@ export const playlists = [{
 
 
 export function Playlist({ isLoading }) {
-
+    console.log(isLoading);
     const playlistItems = playlists.map(playlistItem => 
         <S.SidebarItem key={playlistItem.id}>
             <S.SidebarLink to={`/categories/${playlistItem.id}`}>

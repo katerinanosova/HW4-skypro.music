@@ -16,7 +16,7 @@ export default function Sidebar({ isLoading }) {
         </S.SidebarPersonal>
         <S.SidebarBlock>
           <S.SidebarList>
-            <Playlist isLoading={isLoading}/>
+            <Playlist isLoading={isLoading} />
           </S.SidebarList>
         </S.SidebarBlock>
       </S.MainSidebar>
