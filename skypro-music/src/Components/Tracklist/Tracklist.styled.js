@@ -137,6 +137,7 @@ margin-bottom: 24px;
 `
 
 export const ContentPlaylist = styled.div`
+height: 100vh;
 display: -webkit-box;
 display: -ms-flexbox;
 display: flex;
@@ -145,6 +146,11 @@ display: flex;
 -ms-flex-direction: column;
 flex-direction: column;
 overflow-y: auto;
+-ms-overflow-style: none;  /* IE и Edge */
+scrollbar-width: none;  /* Firefox */
+&::-webkit-scrollbar {
+  display: none;
+}
 `
 
 export const PlaylistTitleCol = styled.div`

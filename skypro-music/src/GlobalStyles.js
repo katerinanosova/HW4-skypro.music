@@ -29,20 +29,11 @@ button {
   cursor: pointer;
 }
 
-// @font-face {
-//   font-family: "StratosSkyeng";
-//   src: local("StratosSkyeng"), local("StratosSkyeng"),
-//     url("../public/fonts/StratosSkyeng.woff2") format("woff2"),
-//     url("../public/fonts/StratosSkyeng.woff") format("woff");
-//   font-weight: 400;
-//   font-style: normal;
-// }
-
 @font-face {
   font-family: 'StratosSkyeng';
   src: local("StratosSkyeng"), local("StratosSkyeng"),
-      url('../public/fonts/stratosskyengweb-regular.woff2') format('woff2'), /* Super Modern Browsers */
-      url('../public/fonts/stratosskyengweb-regular.woff') format('woff'); /* Pretty Modern Browsers */
+      url('/fonts/stratosskyengweb-regular.woff2') format('woff2'), /* Super Modern Browsers */
+      url('/fonts/stratosskyengweb-regular.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: 400;
   font-style: normal;
 }
