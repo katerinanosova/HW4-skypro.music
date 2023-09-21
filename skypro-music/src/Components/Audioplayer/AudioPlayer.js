@@ -1,5 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as S from './AudioPlayer.styled'
+import ProgressBar from './ProgressBar';
+
 
 export default function AudioPlayer({ isLoading, currentTrack }) {
 
@@ -7,8 +9,8 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
     const audioRef = useRef(null);
 
     const handleStart = () => {
-      audioRef.current.play();
-      setIsPlaying(true);
+        audioRef.current.play();
+        setIsPlaying(true);
     };
 
     const handleStop = () => {
@@ -17,6 +19,17 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
     };
 
     const togglePlay = isPlaying ? handleStop : handleStart;
+
+    useEffect(() => {
+      if (currentTrack) {
+        audioRef.current.src = currentTrack.track_file;
+        handleStart();
+        
+      }
+    }, [currentTrack]);
+
+    
+    
 
     return (
     <div>
@@ -32,7 +45,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       {currentTrack ? (
       <S.Bar>
       <S.BarContent>
-        <S.BarPlayerProgress />
+        <ProgressBar currentTrack={currentTrack} audioRef={audioRef}  />
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
@@ -43,7 +56,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay onClick={togglePlay}>
                 <S.PlayerBtnPlaySvg alt="play">
-                  <use xlinkHref="img/icon/sprite.svg#icon-play" />
+                  <use xlinkHref={isPlaying ? 'img/icon/sprite.svg#icon-pause' : 'img/icon/sprite.svg#icon-play'} />
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
