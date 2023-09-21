@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AppRoutes from "./routes";
-import { getTracksApi } from "./api";
+import { getTracksApi } from "./API/api-tracks";
 
 
 function App() {

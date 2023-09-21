@@ -1,13 +1,9 @@
-
+import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
 
-export function getTrackDuration(sec) {
-  const minutes = Math.floor(sec / 60);
-  const seconds = sec % 60;
-  return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
-}
 
-export function GetTracks({ isLoading, tracks, getTracksError, setCurrentTrack }) {
+
+export default function GetTracks({ isLoading, tracks, getTracksError, setCurrentTrack }) {
  
   const trackList = tracks.map(track => 
         <S.PlaylistItem key={track.id}>
