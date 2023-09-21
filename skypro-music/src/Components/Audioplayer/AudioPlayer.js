@@ -1,10 +1,36 @@
+import { useRef, useState } from 'react';
 import * as S from './AudioPlayer.styled'
 
 export default function AudioPlayer({ isLoading, currentTrack }) {
 
+    const [isPlaying, setIsPlaying] = useState(false);
+    const audioRef = useRef(null);
+
+    const handleStart = () => {
+      audioRef.current.play();
+      setIsPlaying(true);
+    };
+
+    const handleStop = () => {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    };
+
+    const togglePlay = isPlaying ? handleStop : handleStart;
+
     return (
     <div>
-      {currentTrack ? (<S.Bar>
+      {currentTrack ? (
+        <div>
+          <div /* eslint-disable-next-line jsx-a11y/media-has-caption */ />
+            <audio controls ref={audioRef}>
+                <source src={currentTrack.track_file} type="audio/mpeg" />
+            </audio>
+        </div>
+      ) : null}
+
+      {currentTrack ? (
+      <S.Bar>
       <S.BarContent>
         <S.BarPlayerProgress />
         <S.BarPlayerBlock>
@@ -15,7 +41,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
-              <S.PlayerBtnPlay>
+              <S.PlayerBtnPlay onClick={togglePlay}>
                 <S.PlayerBtnPlaySvg alt="play">
                   <use xlinkHref="img/icon/sprite.svg#icon-play" />
                 </S.PlayerBtnPlaySvg>
