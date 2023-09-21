@@ -7,8 +7,8 @@ import Categories from "./pages/categoties/categories";
 import MainPage from "./pages/main/main-page";
 import ProtectedRoute from "./Components/protected-route";
 
-export default function AppRoutes ({ user }) {
-    console.log(user);
+export default function AppRoutes ({ user, loading, tracks, getTracksError, currentTrack, setCurrentTrack }) {
+    
     return (
         <Routes>
             <Route path="/login" element={<Login />} />
@@ -16,9 +16,14 @@ export default function AppRoutes ({ user }) {
             <Route path="*" element={<NotFound />} />
 
             <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
-                <Route path="/" element={<MainPage />} />
+                <Route path="/" element={<MainPage
+                    loading={loading}
+                    tracks={tracks}
+                    getTracksError={getTracksError}
+                    currentTrack={currentTrack}
+                    setCurrentTrack={setCurrentTrack} />} />
                 <Route path="/favorites" element={<Favorites />} />
-                <Route path="/categories" element={<Categories />} />
+                <Route path="/categories/:id" element={<Categories />} />
             </Route>
                                 
         </Routes>

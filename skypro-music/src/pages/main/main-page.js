@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import AudioPlayer from "../../Components/Audioplayer/AudioPlayer";
 import NavMenu from "../../Components/NavMenu/NavMenu";
 import Sidebar from "../../Components/Sidebar/Sidebar";
@@ -6,24 +6,11 @@ import Tracklist from "../../Components/Tracklist/Tracklist";
 import GlobalStyle from "../../GlobalStyles";
 import * as S from '../../App.styled';
 
-function delay(interval) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, interval);
-    });
-  };
 
-export default function MainPage() {
+export default function MainPage({ loading, tracks, getTracksError, currentTrack, setCurrentTrack }) {
 
-    const [loading, setLoading] = useState(true);
+    
   
-    useEffect(() => {
-        delay(1000).then(() => {
-        setLoading(!loading);
-        })
-    }, []);
-
 
     return (
         <>
@@ -32,10 +19,12 @@ export default function MainPage() {
                 <S.Container>
                 <S.Main>
                     <NavMenu />
-                    <Tracklist isLoading={loading}/>
-                    <Sidebar isLoading={loading}/>
+                    <Tracklist isLoading={loading} tracks={tracks}
+                    getTracksError={getTracksError}
+                    setCurrentTrack={setCurrentTrack} />
+                    <Sidebar isLoading={loading} />
                 </S.Main>
-                <AudioPlayer isLoading={loading} />
+                <AudioPlayer isLoading={loading} currentTrack={currentTrack} />
                 <S.Footer />
                 </S.Container>
             </S.Wrapper>

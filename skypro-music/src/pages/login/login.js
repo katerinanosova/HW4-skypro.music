@@ -3,7 +3,7 @@ import * as S from './login.styled';
 
 export default function Login() {
     
-    // const userLogin = () => window.localStorage.setItem('user', true);
+    // const userLogin = () => window.localStorage.setItem('user', 'gf');
     
     return (
         <div>

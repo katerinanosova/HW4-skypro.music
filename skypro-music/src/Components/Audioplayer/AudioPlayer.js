@@ -1,8 +1,36 @@
+import { useRef, useState } from 'react';
 import * as S from './AudioPlayer.styled'
 
-export default function AudioPlayer({ isLoading }) {
+export default function AudioPlayer({ isLoading, currentTrack }) {
+
+    const [isPlaying, setIsPlaying] = useState(false);
+    const audioRef = useRef(null);
+
+    const handleStart = () => {
+      audioRef.current.play();
+      setIsPlaying(true);
+    };
+
+    const handleStop = () => {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    };
+
+    const togglePlay = isPlaying ? handleStop : handleStart;
+
     return (
-    <S.Bar>
+    <div>
+      {currentTrack ? (
+        <div>
+          <div /* eslint-disable-next-line jsx-a11y/media-has-caption */ />
+            <audio controls ref={audioRef}>
+                <source src={currentTrack.track_file} type="audio/mpeg" />
+            </audio>
+        </div>
+      ) : null}
+
+      {currentTrack ? (
+      <S.Bar>
       <S.BarContent>
         <S.BarPlayerProgress />
         <S.BarPlayerBlock>
@@ -13,7 +41,7 @@ export default function AudioPlayer({ isLoading }) {
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
-              <S.PlayerBtnPlay>
+              <S.PlayerBtnPlay onClick={togglePlay}>
                 <S.PlayerBtnPlaySvg alt="play">
                   <use xlinkHref="img/icon/sprite.svg#icon-play" />
                 </S.PlayerBtnPlaySvg>
@@ -45,14 +73,14 @@ export default function AudioPlayer({ isLoading }) {
                   {isLoading
                   ? <S.PlayerAuthorLinkLoading />
                   : <S.TrackPlayAuthorLink href="http://">
-                  Ты та...
+                  {currentTrack.name}
                 </S.TrackPlayAuthorLink>}
                 </S.TrackPlayAuthor>
                 <S.TrackPlayAlbum>
                   {isLoading
                   ? <S.PlayerAuthorLinkLoading />
                   : <S.TrackPlayAlbumLink href="http://">
-                  Баста
+                  {currentTrack.author}
                 </S.TrackPlayAlbumLink>}
                 </S.TrackPlayAlbum>
               </S.TrackPlayContain>
@@ -88,6 +116,7 @@ export default function AudioPlayer({ isLoading }) {
           </S.BarVolumeBlock>
         </S.BarPlayerBlock>
       </S.BarContent>
-    </S.Bar>
+    </S.Bar>) : null}
+    </div>
     );
 }
