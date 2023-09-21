@@ -18,7 +18,7 @@ export default function ProgressBar({ currentTrack, audioRef }) {
         
         setTimeout(() => {
             clearInterval(interval)
-        }, 5 * 1000)
+        }, duration * 1000)
         
     }, [currentTime]);
 
