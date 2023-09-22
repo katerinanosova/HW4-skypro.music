@@ -7,6 +7,9 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
+    
+    // const [isLoop, setIsLoop] = useState(false);
+
 
     const handleStart = () => {
         audioRef.current.play();
@@ -24,11 +27,15 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       if (currentTrack) {
         audioRef.current.src = currentTrack.track_file;
         handleStart();
-        
       }
     }, [currentTrack]);
 
-    
+    const toggleLoop = () => {
+      if (currentTrack) {
+        audioRef.current.loop = !audioRef.current.loop;
+        console.log(audioRef.current.loop);
+      }
+    };
     
 
     return (
@@ -64,9 +71,9 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </S.PlayerBtnNextSvg>
               </S.PlayerBtnNext>
-              <S.PlayerBtnRepeat>
+              <S.PlayerBtnRepeat onClick={toggleLoop}>
                 <S.PlayerBtnRepeatSvg alt="repeat">
-                  <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
+                  <use xlinkHref={audioRef.loop ? 'img/icon/sprite.svg#icon-repeatA' : 'img/icon/sprite.svg#icon-repeat'} />
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShuffle>
