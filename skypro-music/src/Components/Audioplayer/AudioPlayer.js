@@ -7,13 +7,16 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
-    
-    // const [isLoop, setIsLoop] = useState(false);
+    // const [duration, setDuration] = useState(0);
+    const [isLoop, setIsLoop] = useState(false);
+
+    // console.log(audioRef.current.loop);
 
 
     const handleStart = () => {
         audioRef.current.play();
         setIsPlaying(true);
+        console.log(audioRef.current.loop);
     };
 
     const handleStop = () => {
@@ -30,10 +33,21 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       }
     }, [currentTrack]);
 
+    // useEffect(() => {
+    //   if (currentTrack) {
+    //     audioRef.current.addEventListener('loadedmetadata', () => {
+    //       setDuration(audioRef.current.duration);
+    //       console.log(duration);
+    //     });
+    //   }
+    // }, [currentTrack]);
+
     const toggleLoop = () => {
       if (currentTrack) {
-        audioRef.current.loop = !audioRef.current.loop;
-        console.log(audioRef.current.loop);
+        console.log(isLoop);
+        // audioRef.current.loop = !audioRef.current.loop;
+        setIsLoop(!audioRef.current.loop);
+        console.log(isLoop);
       }
     };
     
@@ -52,7 +66,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       {currentTrack ? (
       <S.Bar>
       <S.BarContent>
-        <ProgressBar currentTrack={currentTrack} audioRef={audioRef}  />
+        <ProgressBar currentTrack={currentTrack} audioRef={audioRef} />
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
@@ -73,7 +87,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
               </S.PlayerBtnNext>
               <S.PlayerBtnRepeat onClick={toggleLoop}>
                 <S.PlayerBtnRepeatSvg alt="repeat">
-                  <use xlinkHref={audioRef.loop ? 'img/icon/sprite.svg#icon-repeatA' : 'img/icon/sprite.svg#icon-repeat'} />
+                  <use xlinkHref={isLoop ? 'img/icon/sprite.svg#icon-repeatA' : 'img/icon/sprite.svg#icon-repeat'} />
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShuffle>

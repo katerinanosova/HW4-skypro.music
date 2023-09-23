@@ -7,38 +7,70 @@ export default function ProgressBar({ currentTrack, audioRef }) {
     // const duration = currentTrack.duration_in_seconds;
     const [duration, setDuration] = useState(0);
     
-
+    // useEffect(() => {
+    //   if (currentTrack) {
+    //     audioRef.current.addEventListener('loadedmetadata', () => {
+    //       setDuration(audioRef.current.duration);
+    //       console.log(duration);
+    //     });
+    //   }
+    // }, [currentTrack]);
        
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (currentTrack) {
-                setCurrentTime(Math.floor(audioRef.current.currentTime));
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         if (currentTrack) {
+    //             setCurrentTime(Math.floor(audioRef.current.currentTime));
                    
-                }
-        }, 1000);
-        console.log(currentTime); 
+    //             }
+    //     }, 1000);
+    //     console.log(currentTime); 
 
         
-        setTimeout(() => {
+    //     setTimeout(() => {
+    //         clearInterval(interval)
+    //     }, duration * 1000);
+        
+    // }, [currentTime]);
+
+    useEffect(() => {
+      if (currentTrack) {
+        audioRef.current.addEventListener('loadedmetadata', () => {
+          
+          console.log(audioRef.current.duration); // выводится 136.620425
+          setDuration(audioRef.current.duration); // вроде должно установиться значение в duration          
+          console.log(duration); // выводит 0
+
+          const interval = setInterval(() => {
+            setCurrentTime(Math.floor(audioRef.current.currentTime));
+          }, 1000);
+
+          setTimeout(() => {
             clearInterval(interval)
-        }, duration * 1000)
-        
-    }, [currentTime]);
+        }, duration * 1000);
+        });
+      }
+    }, [currentTrack])
 
-
-    // тут я совсем не помнимаю логики: после обновления страницы и выбора трека выдаёт audioRef.current is null, а если трек уже выбран и потом добавить эту строку в код - выдаёт нормальное значение
     // if (currentTrack) {
-    //   console.log(audioRef.current.duration);
+    //   audioRef.current.addEventListener('loadedmetadata', () => {
+    //     useEffect(() => {
+    //         const interval = setInterval(() => {
+    //           setCurrentTime(Math.floor(audioRef.current.currentTime));
+    //         }, 1000);
+    //         setDuration(audioRef.current.duration);
+    //         console.log(audioRef.current.duration);
+    //         console.log(duration);
+    //         setTimeout(() => {
+    //           clearInterval(interval)
+    //       }, duration * 1000);       
+    //     }, [currentTrack]);
+    //   })
     // }
 
 
-    // Uncaught TypeError: audioRef.addEventListener is not a function
-    if (currentTrack) {
-      audioRef.addEventListener('loadedmetadata', () => {
-        setDuration(audioRef.current.duration);
-      });
-    }
-    console.log(duration);
+ 
+
+
 
     
 
