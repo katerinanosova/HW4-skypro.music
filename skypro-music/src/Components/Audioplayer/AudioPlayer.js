@@ -7,7 +7,8 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
-    // const [duration, setDuration] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0);
     const [isLoop, setIsLoop] = useState(false);
 
     // console.log(audioRef.current.loop);
@@ -33,14 +34,23 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       }
     }, [currentTrack]);
 
-    // useEffect(() => {
-    //   if (currentTrack) {
-    //     audioRef.current.addEventListener('loadedmetadata', () => {
-    //       setDuration(audioRef.current.duration);
-    //       console.log(duration);
-    //     });
-    //   }
-    // }, [currentTrack]);
+    useEffect(() => {
+      if (currentTrack) {
+        audioRef.current.addEventListener('loadedmetadata', () => {
+          console.log(audioRef.current.duration);
+          setDuration(audioRef.current.duration);
+          console.log(duration);
+        });
+
+        const interval = setInterval(() => {
+          setCurrentTime(Math.floor(audioRef.current.currentTime));
+        }, 1000);
+
+        setTimeout(() => {
+          clearInterval(interval)
+        }, duration * 1000);
+      }
+    }, [currentTrack]);
 
     const toggleLoop = () => {
       if (currentTrack) {
@@ -66,7 +76,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       {currentTrack ? (
       <S.Bar>
       <S.BarContent>
-        <ProgressBar currentTrack={currentTrack} audioRef={audioRef} />
+        <ProgressBar duration={duration} currentTime={currentTime} setCurrentTime={setCurrentTime} />
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
