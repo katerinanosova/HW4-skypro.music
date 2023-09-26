@@ -1,5 +1,16 @@
 import { styled } from 'styled-components';
 
+export const StyledTimeProgress = styled.div`
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 18px;
+color: #696969;
+display: flex;
+justify-content: flex-end;
+margin-right: 20px;
+`
+
 export const StyledProgressInput = styled.input`
   --progress-height: 8px;
   --progress-color: #b672ff;

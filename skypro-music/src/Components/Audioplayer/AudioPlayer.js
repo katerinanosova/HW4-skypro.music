@@ -10,14 +10,12 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [isLoop, setIsLoop] = useState(false);
-
-    // console.log(audioRef.current.loop);
+    const [volume, setVolume] = useState(0.25);
 
 
     const handleStart = () => {
         audioRef.current.play();
         setIsPlaying(true);
-        console.log(audioRef.current.loop);
     };
 
     const handleStop = () => {
@@ -34,40 +32,48 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       }
     }, [currentTrack]);
 
+
     useEffect(() => {
       if (currentTrack) {
         audioRef.current.addEventListener('loadedmetadata', () => {
-          console.log(audioRef.current.duration);
           setDuration(audioRef.current.duration);
-          console.log(duration);
-        });
-
-        const interval = setInterval(() => {
-          setCurrentTime(Math.floor(audioRef.current.currentTime));
-        }, 1000);
-
-        setTimeout(() => {
-          clearInterval(interval)
-        }, duration * 1000);
+            
+          const interval = setInterval(() => {
+            setCurrentTime(Math.floor(audioRef.current.currentTime));
+            }, 1000);
+    
+            // console.log('audioRef.current.duration =', audioRef.current.duration)
+    
+            setTimeout(() => {
+                clearInterval(interval)
+            }, audioRef.current.duration * 1000);
+            });
       }
     }, [currentTrack]);
 
+
     const toggleLoop = () => {
-      if (currentTrack) {
-        console.log(isLoop);
-        // audioRef.current.loop = !audioRef.current.loop;
-        setIsLoop(!audioRef.current.loop);
-        console.log(isLoop);
-      }
+        setIsLoop(!isLoop);
     };
+
+    const handleTimeChange = (e) => {
+      setCurrentTime(e.target.value);
+      audioRef.current.currentTime = e.target.value
+    }
+
+    const handleVolumeChange = (e) => {
+      setVolume(e.target.value);
+      audioRef.current.volume = e.target.value;
+    }
     
+
 
     return (
     <div>
       {currentTrack ? (
         <div>
           <div /* eslint-disable-next-line jsx-a11y/media-has-caption */ />
-            <audio controls ref={audioRef}>
+            <audio controls ref={audioRef} loop={isLoop}>
                 <source src={currentTrack.track_file} type="audio/mpeg" />
             </audio>
         </div>
@@ -76,7 +82,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       {currentTrack ? (
       <S.Bar>
       <S.BarContent>
-        <ProgressBar duration={duration} currentTime={currentTime} setCurrentTime={setCurrentTime} />
+        <ProgressBar duration={duration} currentTime={currentTime} setCurrentTime={setCurrentTime} handleTimeChange={handleTimeChange} />
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
@@ -149,11 +155,15 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
                   <use xlinkHref="img/icon/sprite.svg#icon-volume" />
                 </S.VolumeSvg>
               </S.VolumeImage>
-              <S.VolumeProgress className="_btn">
+              <S.VolumeProgress>
                 <S.VolumeProgressLine
-                  className="_btn"
                   type="range"
                   name="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={volume}
+                  onChange={handleVolumeChange}
                 />
               </S.VolumeProgress>
             </S.VolumeContent>

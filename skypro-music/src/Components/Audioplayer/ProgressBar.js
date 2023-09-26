@@ -1,18 +1,27 @@
-import { StyledProgressInput } from "./ProgressBar.styled";
+import getTrackDuration from "../../helpers";
+import { StyledProgressInput, StyledTimeProgress } from "./ProgressBar.styled";
 
 
-export default function ProgressBar({ duration, currentTime, setCurrentTime }) {
+
+export default function ProgressBar({ duration, currentTime, handleTimeChange }) {
+    
     
   
+  
     return (
+      <div>
+        <StyledTimeProgress>
+          {getTrackDuration(currentTime)} / {getTrackDuration(duration)}
+        </StyledTimeProgress>
       <StyledProgressInput
         type="range"
         min={0}
         max={duration}
         value={currentTime}
         step={0.01}
-        onChange={(event) => setCurrentTime(event.target.value)}
+        onChange={handleTimeChange}
         $color="#ff0000"
       />
+      </div>
     );
   } 
