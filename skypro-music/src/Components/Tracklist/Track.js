@@ -3,7 +3,7 @@ import * as S from './Track.styled';
 
 
 
-export default function GetTracks({ isLoading, tracks, getTracksError, setCurrentTrack }) {
+export function GetTracks({ isLoading, tracks, getTracksError, setCurrentTrack }) {
  
   const trackList = tracks.map(track => 
         <S.PlaylistItem key={track.id}>

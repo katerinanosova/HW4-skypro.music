@@ -1,14 +1,21 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as S from './AudioPlayer.styled'
+import ProgressBar from './ProgressBar';
+
 
 export default function AudioPlayer({ isLoading, currentTrack }) {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
+    const [duration, setDuration] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [isLoop, setIsLoop] = useState(false);
+    const [volume, setVolume] = useState(0.25);
+
 
     const handleStart = () => {
-      audioRef.current.play();
-      setIsPlaying(true);
+        audioRef.current.play();
+        setIsPlaying(true);
     };
 
     const handleStop = () => {
@@ -18,12 +25,55 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
 
     const togglePlay = isPlaying ? handleStop : handleStart;
 
+    useEffect(() => {
+      if (currentTrack) {
+        audioRef.current.src = currentTrack.track_file;
+        handleStart();
+      }
+    }, [currentTrack]);
+
+
+    useEffect(() => {
+      if (currentTrack) {
+        audioRef.current.addEventListener('loadedmetadata', () => {
+          setDuration(audioRef.current.duration);
+            
+          const interval = setInterval(() => {
+            setCurrentTime(Math.floor(audioRef.current.currentTime));
+            }, 1000);
+    
+            // console.log('audioRef.current.duration =', audioRef.current.duration)
+    
+            setTimeout(() => {
+                clearInterval(interval)
+            }, audioRef.current.duration * 1000);
+            });
+      }
+    }, [currentTrack]);
+
+
+    const toggleLoop = () => {
+        setIsLoop(!isLoop);
+    };
+
+    const handleTimeChange = (e) => {
+      setCurrentTime(e.target.value);
+      audioRef.current.currentTime = e.target.value
+    }
+
+    const handleVolumeChange = (e) => {
+      setVolume(e.target.value);
+      audioRef.current.volume = e.target.value;
+    }
+    
+
+
     return (
     <div>
       {currentTrack ? (
         <div>
           <div /* eslint-disable-next-line jsx-a11y/media-has-caption */ />
-            <audio controls ref={audioRef}>
+            <audio controls ref={audioRef} loop={isLoop}>
                 <source src={currentTrack.track_file} type="audio/mpeg" />
             </audio>
         </div>
@@ -32,7 +82,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
       {currentTrack ? (
       <S.Bar>
       <S.BarContent>
-        <S.BarPlayerProgress />
+        <ProgressBar duration={duration} currentTime={currentTime} setCurrentTime={setCurrentTime} handleTimeChange={handleTimeChange} />
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
@@ -43,7 +93,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay onClick={togglePlay}>
                 <S.PlayerBtnPlaySvg alt="play">
-                  <use xlinkHref="img/icon/sprite.svg#icon-play" />
+                  <use xlinkHref={isPlaying ? 'img/icon/sprite.svg#icon-pause' : 'img/icon/sprite.svg#icon-play'} />
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
@@ -51,9 +101,9 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </S.PlayerBtnNextSvg>
               </S.PlayerBtnNext>
-              <S.PlayerBtnRepeat>
+              <S.PlayerBtnRepeat onClick={toggleLoop}>
                 <S.PlayerBtnRepeatSvg alt="repeat">
-                  <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
+                  <use xlinkHref={isLoop ? 'img/icon/sprite.svg#icon-repeatA' : 'img/icon/sprite.svg#icon-repeat'} />
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShuffle>
@@ -105,11 +155,15 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
                   <use xlinkHref="img/icon/sprite.svg#icon-volume" />
                 </S.VolumeSvg>
               </S.VolumeImage>
-              <S.VolumeProgress className="_btn">
+              <S.VolumeProgress>
                 <S.VolumeProgressLine
-                  className="_btn"
                   type="range"
                   name="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={volume}
+                  onChange={handleVolumeChange}
                 />
               </S.VolumeProgress>
             </S.VolumeContent>
