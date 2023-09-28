@@ -56,7 +56,8 @@ function App() {
     tracks={tracks}
     getTracksError={getTracksError}
     currentTrack={currentTrack}
-    setCurrentTrack={setCurrentTrack} />
+    setCurrentTrack={setCurrentTrack}
+     />
   );
 }
 
