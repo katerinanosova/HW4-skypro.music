@@ -95,6 +95,11 @@ export const SecondaryButton = styled(Button)`
   &:active {
     background-color: #d9d9d9;
   }
+
+  &:disabled {
+    background-color: #D0CECE;
+    color: #ffffff;
+  }
 `;
 
 export const Buttons = styled.div`

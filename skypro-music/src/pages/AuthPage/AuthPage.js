@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import * as S from "./AuthPage.styled";
 import GlobalStyle from "../../GlobalStyles";
-import { registerUser } from "../../API/api-user";
+import { loginUser, registerUser } from "../../API/api-user";
 
 export default function AuthPage({ isLoginMode }) {
     
@@ -14,8 +14,31 @@ export default function AuthPage({ isLoginMode }) {
     const navigate = useNavigate();
   
     const handleLogin = async () => {
-      alert(`Выполняется вход: ${email} ${password}`);
-      setError("Неизвестная ошибка входа");
+      if (email === '' || password === '') {
+        setError('Укажите почту и пароль');
+      } else {
+        try {
+          setIsNewUserLoading(true);
+          const user = await loginUser({ email, password });
+          setIsNewUserLoading(false);
+          console.log(user);
+        } catch (errorData) {
+          const ed = JSON.parse(errorData.message);
+          setIsNewUserLoading(false);
+          if (ed.detail) {
+            setError(ed.detail)
+          }
+          if (ed.password) {
+            setError(ed.password.join(' '))
+          } 
+          if (ed.username) {
+            setError(ed.username[0])
+          }
+          if (ed.email) {
+            setError(ed.email[0])
+          } 
+        }
+      }
     };
 
     
@@ -48,14 +71,8 @@ export default function AuthPage({ isLoginMode }) {
           if (ed.email) {
             setError(ed.email[0])
           }
-          
-                    
-        }
-        
-
+        } 
       }
-              
-            
     };
   
     // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -97,11 +114,11 @@ export default function AuthPage({ isLoginMode }) {
               </S.Inputs>
               {error && <S.Error>{error}</S.Error>}
               <S.Buttons>
-                <S.PrimaryButton onClick={() => handleLogin({ email, password })}>
+                <S.PrimaryButton disabled={isNewUserLoading} onClick={() => handleLogin({ email, password })}>
                   Войти
-                </S.PrimaryButton>
+                </S.PrimaryButton >
                 <Link to="/register">
-                  <S.SecondaryButton> Зарегистрироваться
+                  <S.SecondaryButton disabled={isNewUserLoading}> Зарегистрироваться
                   </S.SecondaryButton>
                 </Link>
               </S.Buttons>
