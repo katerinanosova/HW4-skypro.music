@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import * as S from "./AuthPage.styled";
 import GlobalStyle from "../../GlobalStyles";
@@ -11,6 +11,7 @@ export default function AuthPage({ isLoginMode }) {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [isNewUserLoading, setIsNewUserLoading] = useState(false);
+    const navigate = useNavigate();
   
     const handleLogin = async () => {
       alert(`Выполняется вход: ${email} ${password}`);
@@ -31,6 +32,10 @@ export default function AuthPage({ isLoginMode }) {
           const user = await registerUser({ email, password, username: email });
           setIsNewUserLoading(false);
           console.log(user);
+          navigate('/login');
+          setEmail('');
+          setPassword('');
+          setRepeatPassword('');
         } catch (errorData) {
           const ed = JSON.parse(errorData.message)
           setIsNewUserLoading(false);
@@ -46,11 +51,9 @@ export default function AuthPage({ isLoginMode }) {
           
                     
         }
-        setIsNewUserLoading(false);
+        
 
       }
-
-
               
             
     };
