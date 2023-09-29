@@ -1,15 +1,21 @@
-
+import { useContext } from "react";
 import AudioPlayer from "../../Components/Audioplayer/AudioPlayer";
 import NavMenu from "../../Components/NavMenu/NavMenu";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Tracklist from "../../Components/Tracklist/Tracklist";
 import GlobalStyle from "../../GlobalStyles";
 import * as S from '../../App.styled';
+import { userContext } from "../../userContext";
+
 
 
 export default function MainPage({ loading, tracks, getTracksError, currentTrack, setCurrentTrack }) {
 
-    
+    const { setUser } = useContext(userContext);
+    const userLogout = () => {
+        setUser(null);
+        window.localStorage.removeItem('user');
+      }
   
 
     return (
@@ -18,11 +24,11 @@ export default function MainPage({ loading, tracks, getTracksError, currentTrack
             <S.Wrapper>
                 <S.Container>
                 <S.Main>
-                    <NavMenu />
+                    <NavMenu userLogout={userLogout} />
                     <Tracklist isLoading={loading} tracks={tracks}
                     getTracksError={getTracksError}
                     setCurrentTrack={setCurrentTrack} />
-                    <Sidebar isLoading={loading} />
+                    <Sidebar userLogout={userLogout} isLoading={loading} />
                 </S.Main>
                 <AudioPlayer isLoading={loading} currentTrack={currentTrack} />
                 <S.Footer />

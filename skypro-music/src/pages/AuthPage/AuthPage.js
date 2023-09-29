@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import * as S from "./AuthPage.styled";
 import GlobalStyle from "../../GlobalStyles";
 import { loginUser, registerUser } from "../../API/api-user";
+import { userContext } from "../../userContext";
 
 export default function AuthPage({ isLoginMode }) {
     
@@ -12,6 +13,7 @@ export default function AuthPage({ isLoginMode }) {
     const [repeatPassword, setRepeatPassword] = useState("");
     const [isNewUserLoading, setIsNewUserLoading] = useState(false);
     const navigate = useNavigate();
+    const { setUser } = useContext(userContext);
   
     const handleLogin = async () => {
       if (email === '' || password === '') {
@@ -19,9 +21,12 @@ export default function AuthPage({ isLoginMode }) {
       } else {
         try {
           setIsNewUserLoading(true);
-          const user = await loginUser({ email, password });
+          const loggedUser = await loginUser({ email, password });
           setIsNewUserLoading(false);
-          console.log(user);
+          setUser(loggedUser);
+          window.localStorage.setItem('user', JSON.stringify(loggedUser));
+          navigate('/');
+          console.log(loggedUser);
         } catch (errorData) {
           const ed = JSON.parse(errorData.message);
           setIsNewUserLoading(false);

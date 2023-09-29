@@ -2,7 +2,7 @@ import { useState } from "react";
 import * as S from './NavMenu.styles'
 
 
-export default function NavMenu() {
+export default function NavMenu({ userLogout }) {
   const [open, setOpen] = useState(false);
 
     return (
@@ -29,8 +29,8 @@ export default function NavMenu() {
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to="/login">
-                Войти
+              <S.MenuLink to="/login" onClick={userLogout}>
+                Выйти
               </S.MenuLink>
             </S.MenuItem>
           </S.MenuList>
