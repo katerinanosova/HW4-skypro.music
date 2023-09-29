@@ -57,10 +57,11 @@ export default function AuthPage({ isLoginMode }) {
       else {
         try {
           setIsNewUserLoading(true);
-          const user = await registerUser({ email, password, username: email });
+          const registeredUser = await registerUser({ email, password, username: email });
           setIsNewUserLoading(false);
-          console.log(user);
-          navigate('/login');
+          setUser(registeredUser);
+          window.localStorage.setItem('user', JSON.stringify(registeredUser));
+          navigate('/');
           setEmail('');
           setPassword('');
           setRepeatPassword('');
