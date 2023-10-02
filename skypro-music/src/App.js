@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import AppRoutes from "./routes";
 import { getTracksApi } from "./API/api-tracks";
+import { userContext } from "./userContext";
 
 
 function App() {
-
-  window.localStorage.setItem('user', 'df');
+    
+  const [user, setUser] = useState(window.localStorage.getItem('user') || null);
 
   const [loading, setLoading] = useState(true);
 
@@ -50,13 +51,17 @@ function App() {
   }, []);
   
   return (
-    <AppRoutes 
-    user={window.localStorage.getItem('user')}
-    loading={loading}
-    tracks={tracks}
-    getTracksError={getTracksError}
-    currentTrack={currentTrack}
-    setCurrentTrack={setCurrentTrack} />
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <userContext.Provider value={{ user, setUser }}>
+        <AppRoutes 
+        user={user}
+        loading={loading}
+        tracks={tracks}
+        getTracksError={getTracksError}
+        currentTrack={currentTrack}
+        setCurrentTrack={setCurrentTrack}
+        />
+    </userContext.Provider> 
   );
 }
 

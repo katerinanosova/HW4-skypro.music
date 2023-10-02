@@ -42,8 +42,6 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
             setCurrentTime(Math.floor(audioRef.current.currentTime));
             }, 1000);
     
-            // console.log('audioRef.current.duration =', audioRef.current.duration)
-    
             setTimeout(() => {
                 clearInterval(interval)
             }, audioRef.current.duration * 1000);
