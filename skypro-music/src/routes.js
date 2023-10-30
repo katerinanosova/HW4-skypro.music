@@ -6,7 +6,7 @@ import MainPage from "./pages/main/main-page";
 import ProtectedRoute from "./Components/protected-route";
 import AuthPage from "./pages/AuthPage/AuthPage";
 
-export default function AppRoutes ({ user, loading, tracks, getTracksError, currentTrack, setCurrentTrack }) {
+export default function AppRoutes ({ user, loading, tracks, getTracksError }) {
     
     return (
         <Routes>
@@ -20,8 +20,7 @@ export default function AppRoutes ({ user, loading, tracks, getTracksError, curr
                     loading={loading}
                     tracks={tracks}
                     getTracksError={getTracksError}
-                    currentTrack={currentTrack}
-                    setCurrentTrack={setCurrentTrack} />} />
+                     />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/categories/:id" element={<Categories />} />
             </Route>

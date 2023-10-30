@@ -9,7 +9,7 @@ import { userContext } from "../../userContext";
 
 
 
-export default function MainPage({ loading, tracks, getTracksError, currentTrack, setCurrentTrack }) {
+export default function MainPage({ loading, tracks, getTracksError, setCurrentTrack }) {
 
     const { setUser } = useContext(userContext);
     const userLogout = () => {
@@ -30,7 +30,7 @@ export default function MainPage({ loading, tracks, getTracksError, currentTrack
                     setCurrentTrack={setCurrentTrack} />
                     <Sidebar userLogout={userLogout} isLoading={loading} />
                 </S.Main>
-                <AudioPlayer isLoading={loading} currentTrack={currentTrack} />
+                <AudioPlayer isLoading={loading} />
                 <S.Footer />
                 </S.Container>
             </S.Wrapper>

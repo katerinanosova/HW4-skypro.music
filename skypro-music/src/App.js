@@ -35,7 +35,7 @@ function App() {
   ]);
   const [getTracksError, setGetTracksError] = useState(null);
 
-  const [currentTrack, setCurrentTrack] = useState(null);
+  // const [currentTrack, setCurrentTrack] = useState(null);
  
   useEffect(() => {
       getTracksApi().then((tracksApi) => {
@@ -58,9 +58,7 @@ function App() {
         loading={loading}
         tracks={tracks}
         getTracksError={getTracksError}
-        currentTrack={currentTrack}
-        setCurrentTrack={setCurrentTrack}
-        />
+         />
     </userContext.Provider> 
   );
 }

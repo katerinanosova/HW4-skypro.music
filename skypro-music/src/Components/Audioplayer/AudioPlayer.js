@@ -1,40 +1,46 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import * as S from './AudioPlayer.styled'
 import ProgressBar from './ProgressBar';
+import { startPause, startPlaying } from '../../store/audioplayer/actions';
 
 
-export default function AudioPlayer({ isLoading, currentTrack }) {
 
-    const [isPlaying, setIsPlaying] = useState(false);
+export default function AudioPlayer({ isLoading }) {
+
+    // const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [isLoop, setIsLoop] = useState(false);
     const [volume, setVolume] = useState(0.25);
+    const dispatch = useDispatch();
+    const { playing, track } = useSelector((store) => store.AudioPlayer)
 
+    
 
     const handleStart = () => {
         audioRef.current.play();
-        setIsPlaying(true);
+        dispatch(startPlaying);
     };
 
     const handleStop = () => {
       audioRef.current.pause();
-      setIsPlaying(false);
+      dispatch(startPause);
     };
 
-    const togglePlay = isPlaying ? handleStop : handleStart;
+    const togglePlay = playing ? handleStop : handleStart;
 
     useEffect(() => {
-      if (currentTrack) {
-        audioRef.current.src = currentTrack.track_file;
+      if (track) {
+        audioRef.current.src = track.track_file;
         handleStart();
       }
-    }, [currentTrack]);
+    }, [track]);
 
 
     useEffect(() => {
-      if (currentTrack) {
+      if (track) {
         audioRef.current.addEventListener('loadedmetadata', () => {
           setDuration(audioRef.current.duration);
             
@@ -47,7 +53,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
             }, audioRef.current.duration * 1000);
             });
       }
-    }, [currentTrack]);
+    }, [track]);
 
 
     const toggleLoop = () => {
@@ -68,16 +74,16 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
 
     return (
     <div>
-      {currentTrack ? (
+      {track ? (
         <div>
           <div /* eslint-disable-next-line jsx-a11y/media-has-caption */ />
             <audio controls ref={audioRef} loop={isLoop}>
-                <source src={currentTrack.track_file} type="audio/mpeg" />
+                <source src={track.track_file} type="audio/mpeg" />
             </audio>
         </div>
       ) : null}
 
-      {currentTrack ? (
+      {track ? (
       <S.Bar>
       <S.BarContent>
         <ProgressBar duration={duration} currentTime={currentTime} setCurrentTime={setCurrentTime} handleTimeChange={handleTimeChange} />
@@ -91,7 +97,7 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay onClick={togglePlay}>
                 <S.PlayerBtnPlaySvg alt="play">
-                  <use xlinkHref={isPlaying ? 'img/icon/sprite.svg#icon-pause' : 'img/icon/sprite.svg#icon-play'} />
+                  <use xlinkHref={playing ? 'img/icon/sprite.svg#icon-pause' : 'img/icon/sprite.svg#icon-play'} />
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
@@ -121,14 +127,14 @@ export default function AudioPlayer({ isLoading, currentTrack }) {
                   {isLoading
                   ? <S.PlayerAuthorLinkLoading />
                   : <S.TrackPlayAuthorLink href="http://">
-                  {currentTrack.name}
+                  {track.name}
                 </S.TrackPlayAuthorLink>}
                 </S.TrackPlayAuthor>
                 <S.TrackPlayAlbum>
                   {isLoading
                   ? <S.PlayerAuthorLinkLoading />
                   : <S.TrackPlayAlbumLink href="http://">
-                  {currentTrack.author}
+                  {track.author}
                 </S.TrackPlayAlbumLink>}
                 </S.TrackPlayAlbum>
               </S.TrackPlayContain>

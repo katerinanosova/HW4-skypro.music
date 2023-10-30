@@ -10,7 +10,7 @@ const years = [2000, 2001, 2002];
 const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
 
 
-export default function Tracklist({ isLoading, tracks, getTracksError, setCurrentTrack }) {
+export default function Tracklist({ isLoading, tracks, getTracksError }) {
     
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -46,8 +46,7 @@ export default function Tracklist({ isLoading, tracks, getTracksError, setCurren
           </S.ContentTitle>
           <S.ContentPlaylist>
             <GetTracks isLoading={isLoading} tracks={tracks}
-                    getTracksError={getTracksError}
-                    setCurrentTrack={setCurrentTrack} />
+                    getTracksError={getTracksError} />
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainCenterblock>
