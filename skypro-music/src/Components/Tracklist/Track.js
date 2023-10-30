@@ -13,7 +13,7 @@ export function GetTracks({ isLoading, tracks, getTracksError}) {
  
   const trackList = tracks.map(track => 
         <S.PlaylistItem key={track.id}>
-        <S.PlaylistTrack onClick={() => dispatch(setCurrentTrack({ playlist: tracks, track: track }))}>
+        <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: tracks, track: track }))}}>
           <S.TrackTitle>
           <div>
             {isLoading ? <S.TrackTitleImageLoading /> : <S.TrackTitleImage>
