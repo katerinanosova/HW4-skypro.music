@@ -15,8 +15,9 @@ export default function AudioPlayer({ isLoading }) {
     const [isLoop, setIsLoop] = useState(false);
     const [volume, setVolume] = useState(0.25);
     const dispatch = useDispatch();
-    const { playing, track } = useSelector((store) => store.AudioPlayer)
-
+    
+    const track = useSelector((store) => store.AudioPlayer.track);
+    const isPlaying = useSelector((store) => store.AudioPlayer.playing)
     
 
     const handleStart = () => {
@@ -29,7 +30,7 @@ export default function AudioPlayer({ isLoading }) {
       dispatch(startPause);
     };
 
-    const togglePlay = playing ? handleStop : handleStart;
+    const togglePlay = isPlaying ? handleStop : handleStart;
 
     useEffect(() => {
       if (track) {
@@ -97,7 +98,7 @@ export default function AudioPlayer({ isLoading }) {
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay onClick={togglePlay}>
                 <S.PlayerBtnPlaySvg alt="play">
-                  <use xlinkHref={playing ? 'img/icon/sprite.svg#icon-pause' : 'img/icon/sprite.svg#icon-play'} />
+                  <use xlinkHref={isPlaying ? 'img/icon/sprite.svg#icon-pause' : 'img/icon/sprite.svg#icon-play'} />
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
