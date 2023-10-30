@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 import useDispatch from 'react-redux';
 import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
@@ -12,7 +13,7 @@ export function GetTracks({ isLoading, tracks, getTracksError}) {
  
   const trackList = tracks.map(track => 
         <S.PlaylistItem key={track.id}>
-        <S.PlaylistTrack onClick={() => dispatch(setCurrentTrack({ track, playlist: '' }))}>
+        <S.PlaylistTrack onClick={() => dispatch(setCurrentTrack({ playlist: tracks, track: track }))}>
           <S.TrackTitle>
           <div>
             {isLoading ? <S.TrackTitleImageLoading /> : <S.TrackTitleImage>
