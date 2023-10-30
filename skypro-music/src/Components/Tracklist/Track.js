@@ -1,5 +1,5 @@
 /* eslint-disable object-shorthand */
-import useDispatch from 'react-redux';
+import { useDispatch } from 'react-redux';
 import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
 import { setCurrentTrack } from '../../store/audioplayer/actions';
@@ -7,9 +7,10 @@ import { setCurrentTrack } from '../../store/audioplayer/actions';
 
 
 
+
 export function GetTracks({ isLoading, tracks, getTracksError}) {
 
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch()
  
   const trackList = tracks.map(track => 
         <S.PlaylistItem key={track.id}>
