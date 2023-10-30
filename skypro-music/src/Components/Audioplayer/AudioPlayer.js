@@ -16,8 +16,8 @@ export default function AudioPlayer({ isLoading }) {
     const [volume, setVolume] = useState(0.25);
     const dispatch = useDispatch();
     
-    const track = useSelector((store) => store.AudioPlayer.track);
-    const isPlaying = useSelector((store) => store.AudioPlayer.playing)
+    const track = useSelector((store) => store.audioplayer.track);
+    const isPlaying = useSelector((store) => store.audioplayer.playing)
     
 
     const handleStart = () => {
