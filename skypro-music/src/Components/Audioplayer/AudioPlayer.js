@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as S from './AudioPlayer.styled'
 import ProgressBar from './ProgressBar';
-import { startPause, startPlaying } from '../../store/audioplayer/actions';
+import { nextTrack, prevTrack, startPause, startPlaying } from '../../store/audioplayer/actions';
 
 
 
@@ -22,12 +22,12 @@ export default function AudioPlayer({ isLoading }) {
 
     const handleStart = () => {
         audioRef.current.play();
-        dispatch(startPlaying);
+        dispatch(startPlaying());
     };
 
     const handleStop = () => {
       audioRef.current.pause();
-      dispatch(startPause);
+      dispatch(startPause());
     };
 
     const togglePlay = isPlaying ? handleStop : handleStart;
@@ -91,7 +91,7 @@ export default function AudioPlayer({ isLoading }) {
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
-              <S.PlayerBtnPrev>
+              <S.PlayerBtnPrev onClick={dispatch(prevTrack())}>
                 <S.PlayerBtnPrevSvg alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </S.PlayerBtnPrevSvg>
@@ -101,7 +101,7 @@ export default function AudioPlayer({ isLoading }) {
                   <use xlinkHref={isPlaying ? 'img/icon/sprite.svg#icon-pause' : 'img/icon/sprite.svg#icon-play'} />
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
-              <S.PlayerBtnNext>
+              <S.PlayerBtnNext onClick={dispatch(nextTrack())}>
                 <S.PlayerBtnNextSvg alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </S.PlayerBtnNextSvg>

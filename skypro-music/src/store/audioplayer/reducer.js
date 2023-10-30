@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, PLAY, PAUSE } from "./actions";
+import { SET_CURRENT_TRACK, PLAY, PAUSE, NEXT_TRACK, PREV_TRACK } from "./actions";
 
 const initialState = {
     playing: false,
@@ -33,6 +33,42 @@ export default function audioplayerReducer(state = initialState, action) {
             return {
                 ...state,
                 playing: false
+            }
+        }
+
+        case NEXT_TRACK: {
+            const playlist = state.shuffled ? state.shuffledPlaylist : state.playlist;
+            const currentTrackIndex = playlist.findIndex((track) => track.id === state.track.id)
+
+            const nextTrack = playlist[currentTrackIndex + 1]
+
+            if (!nextTrack) {
+                return state
+            }
+
+            return {
+                ...state,
+                track: nextTrack
+            }
+        }
+
+        case PREV_TRACK: {
+            const playlist = state.shuffled ? state.shuffledPlaylist : state.playlist;
+            const currentTrackIndex = playlist.findIndex((track) => track.id === state.track.id)
+
+            if (currentTrackIndex === 0) {
+                return state
+            }
+
+            const prevTrack = playlist[currentTrackIndex - 1]
+
+            if (!prevTrack) {
+                return state
+            }
+
+            return {
+                ...state,
+                track: prevTrack
             }
         }
 
