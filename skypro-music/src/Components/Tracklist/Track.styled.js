@@ -60,7 +60,7 @@ export const TrackTitleDotSvg = styled.svg`
   background-color: #b672ff;
   border-radius: 8px;
   display: block;
-  animation: ${({ $isPlaying }) => ( $isPlaying ? 'bubble_out 0.6s ease-in-out infinite both' : 'none')};
+  animation: ${({ $isPlaying }) => ( $isPlaying ? 'bubble_out 1s ease-in-out infinite both' : 'none')};
 }
 
 @keyframes bubble_out {
