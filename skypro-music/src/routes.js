@@ -7,7 +7,7 @@ import ProtectedRoute from "./Components/protected-route";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import Layout from "./Components/Layout/layout";
 
-export default function AppRoutes ({ user, loading, tracks, getTracksError }) {
+export default function AppRoutes ({ user, loading, tracks, getTracksError, activeIndex, setActiveIndex }) {
     
     return (
         <Routes>
@@ -21,8 +21,14 @@ export default function AppRoutes ({ user, loading, tracks, getTracksError }) {
                     <Route index element={<MainPage
                         tracks={tracks}
                         getTracksError={getTracksError}
+                        activeIndex={activeIndex}
+                        setActiveIndex={setActiveIndex}
                         />} />
-                    <Route path="favorites" element={<Favorites />} />
+                    <Route path="favorites" element={<Favorites
+                            tracks={tracks}
+                            getTracksError={getTracksError}
+                            activeIndex={activeIndex}
+                            setActiveIndex={setActiveIndex} />} />
                     <Route path="categories/:id" element={<Categories />} />
                 </Route>
             </Route>

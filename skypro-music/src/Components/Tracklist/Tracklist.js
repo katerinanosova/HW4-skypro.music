@@ -1,18 +1,18 @@
-import { useState } from "react";
+// import { useState } from "react";
 import Filter from "./Filter";
 import { GetTracks } from "./Track";
 import * as S from './Tracklist.styled';
 
 
 
-const genres = ['Рок', 'Техно', 'Поп', 'Металл', 'Панк-рок'];
-const years = [2000, 2001, 2002];
-const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
+export const genres = ['Рок', 'Техно', 'Поп', 'Металл', 'Панк-рок'];
+export const years = [2000, 2001, 2002];
+export const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
 
 
-export default function Tracklist({ isLoading, tracks, getTracksError }) {
+export default function Tracklist({ isLoading, tracks, getTracksError, activeIndex, setActiveIndex }) {
     
-    const [activeIndex, setActiveIndex] = useState(0);
+    // const [activeIndex, setActiveIndex] = useState(0);
 
     return (
       <S.MainCenterblock>
