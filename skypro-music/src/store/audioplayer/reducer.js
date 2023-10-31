@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, PLAY, PAUSE, NEXT_TRACK, PREV_TRACK } from "./actions";
+import { SET_CURRENT_TRACK, PLAY, PAUSE, NEXT_TRACK, PREV_TRACK, SHUFFLE } from "./actions";
 
 const initialState = {
     playing: false,
@@ -69,6 +69,16 @@ export default function audioplayerReducer(state = initialState, action) {
             return {
                 ...state,
                 track: prevTrack
+            }
+        }
+
+        case SHUFFLE: {
+            return {
+                ...state,
+                shuffled: !state.shuffled,
+                shuffledPlaylist: [...action.payload.playlist].sort(
+                    () => 0.5 - Math.random(),
+                )
             }
         }
 

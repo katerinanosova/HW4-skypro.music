@@ -1,5 +1,5 @@
 /* eslint-disable object-shorthand */
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
 import { setCurrentTrack } from '../../store/audioplayer/actions';
@@ -10,6 +10,8 @@ import { setCurrentTrack } from '../../store/audioplayer/actions';
 
 export function GetTracks({ isLoading, tracks, getTracksError}) {
 
+  const playingTrack = useSelector((store) => store.audioplayer.track)
+  const isPlaying = useSelector((store) => store.audioplayer.playing)
   const dispatch = useDispatch()
  
   const trackList = tracks.map(track => 
@@ -17,10 +19,13 @@ export function GetTracks({ isLoading, tracks, getTracksError}) {
         <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: tracks, track: track }))}}>
           <S.TrackTitle>
           <div>
-            {isLoading ? <S.TrackTitleImageLoading /> : <S.TrackTitleImage>
-             <S.TrackTitleSvg alt="music">
-               <use xlinkHref="img/icon/sprite.svg#icon-note"/>
-             </S.TrackTitleSvg>
+            {isLoading ? <S.TrackTitleImageLoading /> : 
+            <S.TrackTitleImage>
+              {playingTrack && playingTrack.id === track.id ? 
+              <S.TrackTitleDotSvg $isPlaying={isPlaying} alt="music" />
+              : <S.TrackTitleSvg alt="music">
+              <use xlinkHref="img/icon/sprite.svg#icon-note"/>
+            </S.TrackTitleSvg> }
            </S.TrackTitleImage>}
           </div>
           {isLoading ? <S.TrackTitleTextLoading /> : <S.TrackTitleText>

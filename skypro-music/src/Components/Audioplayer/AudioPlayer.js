@@ -70,6 +70,14 @@ export default function AudioPlayer({ isLoading }) {
       setVolume(e.target.value);
       audioRef.current.volume = e.target.value;
     }
+
+    const playNextTrack = () => {
+      dispatch(nextTrack())
+    }
+
+    const playPrevTrack = () => {
+      dispatch(prevTrack())
+    }
     
 
 
@@ -91,7 +99,7 @@ export default function AudioPlayer({ isLoading }) {
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
-              <S.PlayerBtnPrev onClick={dispatch(prevTrack())}>
+              <S.PlayerBtnPrev onClick={playPrevTrack}>
                 <S.PlayerBtnPrevSvg alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </S.PlayerBtnPrevSvg>
@@ -101,7 +109,7 @@ export default function AudioPlayer({ isLoading }) {
                   <use xlinkHref={isPlaying ? 'img/icon/sprite.svg#icon-pause' : 'img/icon/sprite.svg#icon-play'} />
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
-              <S.PlayerBtnNext onClick={dispatch(nextTrack())}>
+              <S.PlayerBtnNext onClick={playNextTrack}>
                 <S.PlayerBtnNextSvg alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </S.PlayerBtnNextSvg>

@@ -3,6 +3,7 @@ export const PLAY = 'PLAY';
 export const PAUSE = 'PAUSE';
 export const NEXT_TRACK = 'NEXT_TRACK';
 export const PREV_TRACK = 'PREV_TRACK';
+export const SHUFFLE = 'SHUFFLE';
 
 export const setCurrentTrack = ({ playlist, track }) => ({
     type: SET_CURRENT_TRACK,
@@ -26,4 +27,8 @@ export const nextTrack = () => ({
 
 export const prevTrack = () => ({
     type: PREV_TRACK
+})
+
+export const shuffle = () => ({
+    type: SHUFFLE
 })
