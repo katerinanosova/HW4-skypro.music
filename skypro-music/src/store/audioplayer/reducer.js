@@ -73,12 +73,10 @@ export default function audioplayerReducer(state = initialState, action) {
         }
 
         case SHUFFLE: {
+            
             return {
                 ...state,
-                shuffled: !state.shuffled,
-                shuffledPlaylist: [...action.payload.playlist].sort(
-                    () => 0.5 - Math.random(),
-                )
+                shuffled: !state.shuffled
             }
         }
 

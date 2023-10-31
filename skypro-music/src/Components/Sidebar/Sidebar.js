@@ -10,7 +10,6 @@ import { userContext } from "../../userContext";
 export default function Sidebar({ isLoading, userLogout }) {
 
   const { user } = useContext(userContext);
-
   
 
     return (
