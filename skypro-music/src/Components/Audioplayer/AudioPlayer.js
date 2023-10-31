@@ -81,7 +81,14 @@ export default function AudioPlayer({ isLoading }) {
     }
 
     const playPrevTrack = () => {
-      dispatch(prevTrack())
+
+      if (audioRef.current.currentTime > 5) {
+        setCurrentTime(0);
+        audioRef.current.currentTime = 0;
+      } else {
+        dispatch(prevTrack())
+      }
+
     }
     
 
