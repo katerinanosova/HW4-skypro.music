@@ -5,6 +5,7 @@ import Categories from "./pages/categoties/categories";
 import MainPage from "./pages/main/main-page";
 import ProtectedRoute from "./Components/protected-route";
 import AuthPage from "./pages/AuthPage/AuthPage";
+import Layout from "./Components/Layout/layout";
 
 export default function AppRoutes ({ user, loading, tracks, getTracksError }) {
     
@@ -16,13 +17,14 @@ export default function AppRoutes ({ user, loading, tracks, getTracksError }) {
             <Route path="*" element={<NotFound />} />
 
             <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
-                <Route path="/" element={<MainPage
-                    loading={loading}
-                    tracks={tracks}
-                    getTracksError={getTracksError}
-                     />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/categories/:id" element={<Categories />} />
+                <Route path="/" element={<Layout loading={loading} />}>
+                    <Route index element={<MainPage
+                        tracks={tracks}
+                        getTracksError={getTracksError}
+                        />} />
+                    <Route path="favorites" element={<Favorites />} />
+                    <Route path="categories/:id" element={<Categories />} />
+                </Route>
             </Route>
                                 
         </Routes>
