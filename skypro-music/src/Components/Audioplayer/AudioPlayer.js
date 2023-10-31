@@ -61,7 +61,7 @@ export default function AudioPlayer({ isLoading }) {
       }
     }, [track]);
 
-
+    
     const toggleLoop = () => {
         setIsLoop(!isLoop);
     };
@@ -79,6 +79,14 @@ export default function AudioPlayer({ isLoading }) {
     const playNextTrack = () => {
       dispatch(nextTrack())
     }
+
+    useEffect(() => {
+      if (track) {
+        audioRef.current.addEventListener('ended', () => {
+          playNextTrack();
+        })
+      }
+    }, [track]);
 
     const playPrevTrack = () => {
 
