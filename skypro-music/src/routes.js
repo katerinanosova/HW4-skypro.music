@@ -7,7 +7,7 @@ import ProtectedRoute from "./Components/protected-route";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import Layout from "./Components/Layout/layout";
 
-export default function AppRoutes ({ user, loading, tracks, getTracksError }) {
+export default function AppRoutes ({ user }) {
     
     return (
         <Routes>
@@ -17,14 +17,17 @@ export default function AppRoutes ({ user, loading, tracks, getTracksError }) {
             <Route path="*" element={<NotFound />} />
 
             <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
-                <Route path="/" element={<Layout loading={loading} />}>
+                <Route path="/" element={<Layout 
+                // loading={loading}
+                 />}>
                     <Route index element={<MainPage
-                        tracks={tracks}
-                        getTracksError={getTracksError}
+                        // tracks={tracks}
+                        // getTracksError={getTracksError}
                         />} />
                     <Route path="favorites" element={<Favorites
-                            tracks={tracks}
-                            getTracksError={getTracksError} />} />
+                            // tracks={tracks}
+                            // getTracksError={getTracksError}
+                             />} />
                     <Route path="categories/:id" element={<Categories />} />
                 </Route>
             </Route>

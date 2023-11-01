@@ -1,3 +1,4 @@
+import { useGetAllTracksQuery } from '../../API/api-tracks';
 import * as S from './Playlist.styled'
 
 
@@ -16,7 +17,9 @@ export const playlists = [{
 }]
 
 
-export function Playlist({ isLoading }) {
+export function Playlist() {
+
+    const { isLoading } = useGetAllTracksQuery();
     
     const playlistItems = playlists.map(playlistItem => 
         <S.SidebarItem key={playlistItem.id}>

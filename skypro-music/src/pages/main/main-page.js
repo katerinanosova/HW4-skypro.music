@@ -9,7 +9,7 @@ import Tracklist from "../../Components/Tracklist/Tracklist";
 
 
 
-export default function MainPage({ loading, tracks, getTracksError, setCurrentTrack }) {
+export default function MainPage() {
 
     // const { setUser } = useContext(userContext);
     // const userLogout = () => {
@@ -25,9 +25,11 @@ export default function MainPage({ loading, tracks, getTracksError, setCurrentTr
         //         <S.Container>
         //         <S.Main>
         //             <NavMenu userLogout={userLogout} />
-                    <Tracklist isLoading={loading} tracks={tracks}
-                    getTracksError={getTracksError}
-                    setCurrentTrack={setCurrentTrack} />
+                    <Tracklist 
+                    // isLoading={loading} tracks={tracks}
+                    // getTracksError={getTracksError}
+                    // setCurrentTrack={setCurrentTrack} 
+                    />
         //             <Sidebar userLogout={userLogout} isLoading={loading} />
         //         </S.Main>
         //         <AudioPlayer isLoading={loading} />

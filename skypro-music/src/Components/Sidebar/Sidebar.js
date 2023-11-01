@@ -7,7 +7,7 @@ import { userContext } from "../../userContext";
 
 
 
-export default function Sidebar({ isLoading, userLogout }) {
+export default function Sidebar({ userLogout }) {
 
   const { user } = useContext(userContext);
   
@@ -26,7 +26,7 @@ export default function Sidebar({ isLoading, userLogout }) {
         </S.SidebarPersonal>
         <S.SidebarBlock>
           <S.SidebarList>
-            <Playlist isLoading={isLoading} />
+            <Playlist />
           </S.SidebarList>
         </S.SidebarBlock>
       </S.MainSidebar>

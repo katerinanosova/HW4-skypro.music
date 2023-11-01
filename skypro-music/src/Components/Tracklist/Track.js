@@ -3,20 +3,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
 import { setCurrentTrack } from '../../store/audioplayer/actions';
+import { useGetAllTracksQuery } from '../../API/api-tracks';
 
 
 
 
 
-export function GetTracks({ isLoading, tracks, getTracksError}) {
+
+export function GetTracks() {
+
+  const { data, error, isLoading } = useGetAllTracksQuery();
+
+
 
   const playingTrack = useSelector((store) => store.audioplayer.track)
   const isPlaying = useSelector((store) => store.audioplayer.playing)
   const dispatch = useDispatch()
  
-  const trackList = tracks.map(track => 
+  const trackList = data.map(track => 
         <S.PlaylistItem key={track.id}>
-        <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: tracks, track: track }))}}>
+        <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: data, track: track }))}}>
           <S.TrackTitle>
           <div>
             {isLoading ? <S.TrackTitleImageLoading /> : 
@@ -62,6 +68,7 @@ export function GetTracks({ isLoading, tracks, getTracksError}) {
       </S.PlaylistItem> 
         )
         return (
-          getTracksError || trackList
+          // getTracksError || trackList
+          error || trackList
         );
 }

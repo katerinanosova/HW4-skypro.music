@@ -10,7 +10,7 @@ import { userContext } from "../../userContext";
 
 
 
-export default function Layout({ loading }) {
+export default function Layout() {
 
     const { setUser } = useContext(userContext);
     const userLogout = () => {
@@ -27,9 +27,9 @@ export default function Layout({ loading }) {
                 <S.Main>
                     <NavMenu userLogout={userLogout} />
                     <Outlet />
-                    <Sidebar userLogout={userLogout} isLoading={loading} />
+                    <Sidebar userLogout={userLogout} />
                 </S.Main>
-                <AudioPlayer isLoading={loading} />
+                <AudioPlayer />
                 <S.Footer />
                 </S.Container>
             </S.Wrapper>

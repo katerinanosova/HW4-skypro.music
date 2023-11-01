@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as S from './AudioPlayer.styled'
 import ProgressBar from './ProgressBar';
 import { nextTrack, prevTrack, shuffle, startPause, startPlaying } from '../../store/audioplayer/actions';
+import { useGetAllTracksQuery } from '../../API/api-tracks';
 
 
 
-export default function AudioPlayer({ isLoading }) {
+export default function AudioPlayer() {
+
+    const { isLoading } = useGetAllTracksQuery();
 
     // const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
