@@ -1,10 +1,33 @@
-// import { useState } from "react";
-import Filter from "../../Components/Tracklist/Filter";
 import { GetTracks } from "../../Components/Tracklist/Track";
 import * as S from '../../Components/Tracklist/Tracklist.styled';
-import { genres, years, author } from "../../Components/Tracklist/Tracklist";
 
-export default function Favorites({ isLoading, tracks, getTracksError, activeIndex, setActiveIndex }) {
+
+const favTracks = [
+    {
+        id: 8,
+        name: "Chase",
+        author: "Alexander Nakarada",
+        release_date: "2005-06-11",
+        genre: "Классическая музыка",
+        duration_in_seconds: 205,
+        album: "Chase",
+        logo: null,
+        track_file: "https://skypro-music-api.skyeng.tech/media/music_files/Alexander_Nakarada_-_Chase.mp3",
+    },
+    {
+        id: 9,
+        name: "Open Sea epic",
+        author: "Frank Schroter",
+        release_date: "2019-06-12",
+        genre: "Классическая музыка",
+        duration_in_seconds: 165,
+        album: "Open Sea epic",
+        logo: null,
+        track_file: "https://skypro-music-api.skyeng.tech/media/music_files/Frank_Schroter_-_Open_Sea_epic.mp3",
+    }
+]
+
+export default function Favorites({ isLoading, getTracksError }) {
 
 
     return (
@@ -20,12 +43,6 @@ export default function Favorites({ isLoading, tracks, getTracksError, activeInd
           />
         </S.CenterblockSearch>
         <S.CenterblockH2>Мои треки</S.CenterblockH2>
-        <S.CenterblockFilter>
-          <S.FilterTitle>Искать по:</S.FilterTitle>
-          <Filter type='исполнителю' filterName={author} isActive={activeIndex === 1} onShow={() => setActiveIndex(1)} onHide={() => setActiveIndex(0)} />
-          <Filter type='году выпуска' filterName={years} isActive={activeIndex === 2} onShow={() => setActiveIndex(2)} onHide={() => setActiveIndex(0)} />
-          <Filter type='жанру' filterName={genres} isActive={activeIndex === 3} onShow={() => setActiveIndex(3)} onHide={() => setActiveIndex(0)} />          
-        </S.CenterblockFilter>
         <S.CenterblockContent>
           <S.ContentTitle>
             <S.PlaylistTitleCol01>Трек</S.PlaylistTitleCol01>
@@ -38,7 +55,7 @@ export default function Favorites({ isLoading, tracks, getTracksError, activeInd
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            <GetTracks isLoading={isLoading} tracks={tracks}
+            <GetTracks isLoading={isLoading} tracks={favTracks}
                     getTracksError={getTracksError} />
           </S.ContentPlaylist>
         </S.CenterblockContent>

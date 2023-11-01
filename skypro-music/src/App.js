@@ -37,7 +37,7 @@ function App() {
 
   // const [currentTrack, setCurrentTrack] = useState(null);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  
 
  
   useEffect(() => {
@@ -61,8 +61,6 @@ function App() {
         loading={loading}
         tracks={tracks}
         getTracksError={getTracksError}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
          />
     </userContext.Provider> 
   );

@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import Filter from "./Filter";
 import { GetTracks } from "./Track";
 import * as S from './Tracklist.styled';
@@ -10,9 +10,9 @@ export const years = [2000, 2001, 2002];
 export const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
 
 
-export default function Tracklist({ isLoading, tracks, getTracksError, activeIndex, setActiveIndex }) {
+export default function Tracklist({ isLoading, tracks, getTracksError }) {
     
-    // const [activeIndex, setActiveIndex] = useState(0);
+    const [activeIndex, setActiveIndex] = useState(0);
 
     return (
       <S.MainCenterblock>
