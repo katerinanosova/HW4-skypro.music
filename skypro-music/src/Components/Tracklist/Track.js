@@ -12,7 +12,7 @@ import { useGetAllTracksQuery } from '../../API/api-tracks';
 
 export function GetTracks() {
 
-  const { data, error, isLoading } = useGetAllTracksQuery();
+  const { data = [], error, isLoading } = useGetAllTracksQuery();
 
 
 
