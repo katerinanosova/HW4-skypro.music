@@ -13,9 +13,11 @@ export const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
 
 export default function Tracklist() {
 
-    const { data = [] } = useGetAllTracksQuery();
+    const { data = [], error, isLoading } = useGetAllTracksQuery();
     
     const [activeIndex, setActiveIndex] = useState(0);
+
+
 
     return (
       <S.MainCenterblock>
@@ -48,7 +50,7 @@ export default function Tracklist() {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            <GetTracks tracks={data} />
+            <GetTracks tracks={data} isLoading={isLoading} getTracksError={error}  />
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainCenterblock>

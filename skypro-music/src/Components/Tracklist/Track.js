@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
 import { setCurrentTrack } from '../../store/audioplayer/actions';
-import { useGetAllTracksQuery } from '../../API/api-tracks';
 
 
 
-export function GetTracks({ tracks }) {
 
-  const { error, isLoading } = useGetAllTracksQuery();
+export function GetTracks({ tracks, isLoading, getTracksError }) {
 
 
 
@@ -65,6 +63,6 @@ export function GetTracks({ tracks }) {
       </S.PlaylistItem> 
         )
         return (
-          error || trackList
+          getTracksError || trackList
         );
 }

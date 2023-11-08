@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { useGetFavTracksQuery } from "../../API/api-tracks";
+import { refreshToken } from "../../API/api-user";
 import { GetTracks } from "../../Components/Tracklist/Track";
 import * as S from '../../Components/Tracklist/Tracklist.styled';
+import { userContext } from "../../userContext";
 
 
 // const favTracks = [
@@ -28,9 +31,17 @@ import * as S from '../../Components/Tracklist/Tracklist.styled';
 //     }
 // ]
 
-export default function Favorites({ isLoading, getTracksError }) {
+export default function Favorites() {
 
-    const { favTracks = [] } = useGetFavTracksQuery();
+    const { favTracks = [], isLoading, error } = useGetFavTracksQuery();
+    const { token } = useContext(userContext);
+    
+    if (error) {
+      const newToken = refreshToken({ token: token.refresh });
+      console.log(newToken);
+
+    }
+
 
 
     return (
@@ -59,7 +70,7 @@ export default function Favorites({ isLoading, getTracksError }) {
           </S.ContentTitle>
           <S.ContentPlaylist>
             <GetTracks isLoading={isLoading} tracks={favTracks}
-                    getTracksError={getTracksError} />
+                     getTracksError={error ? error.data.detail : ''}/> 
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainCenterblock>
