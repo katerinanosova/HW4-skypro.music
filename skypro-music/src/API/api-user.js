@@ -1,4 +1,6 @@
 
+
+
 export async function registerUser({ email, password, username}) {
     const response = await fetch('https://skypro-music-api.skyeng.tech/user/signup/', {
         method: "POST",
@@ -79,4 +81,31 @@ export const getToken = async ({ email, password }) => {
     const data = await response.json();
     return data;
         
+}
+
+export const refreshToken = async () => {
+    const token = JSON.parse(window.localStorage.getItem('token'));
+
+    const response = await fetch('https://skypro-music-api.skyeng.tech/user/token/refresh/', {
+        method: 'POST',
+        body: JSON.stringify({
+            refresh: token.refresh
+        }),
+        headers: {
+            "content-type": "application/json",
+        }
+    })
+
+    if (response.status === 401 || response.status === 400) {
+        const errorData = await response.json();
+        throw new Error(JSON.stringify(errorData));
+    }
+
+
+    if (response.status === 500) {
+        throw new Error('Сервер сломался. Попробуй позже');
+    }
+
+    const data = await response.json();
+    return data;
 }

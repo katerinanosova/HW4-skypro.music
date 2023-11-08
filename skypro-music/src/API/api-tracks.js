@@ -1,11 +1,14 @@
 /* eslint-disable import/prefer-default-export */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { useContext } from 'react';
-import { userContext } from '../userContext';
+// import { useContext } from 'react';
+// import { userContext } from '../userContext';
 
 
 const baseHost = 'https://skypro-music-api.skyeng.tech/';
-const { token } = useContext(userContext);
+const token = JSON.parse(window.localStorage.getItem('token'));
+console.log(token.access);
+
+
 
 
 export const tracksApi = createApi({
@@ -28,5 +31,5 @@ export const tracksApi = createApi({
     })
 })
 
-export const { useGetAllTracksQuery } = tracksApi;
+export const { useGetAllTracksQuery, useGetFavTracksQuery } = tracksApi;
 

@@ -1,33 +1,36 @@
+import { useGetFavTracksQuery } from "../../API/api-tracks";
 import { GetTracks } from "../../Components/Tracklist/Track";
 import * as S from '../../Components/Tracklist/Tracklist.styled';
 
 
-const favTracks = [
-    {
-        id: 8,
-        name: "Chase",
-        author: "Alexander Nakarada",
-        release_date: "2005-06-11",
-        genre: "Классическая музыка",
-        duration_in_seconds: 205,
-        album: "Chase",
-        logo: null,
-        track_file: "https://skypro-music-api.skyeng.tech/media/music_files/Alexander_Nakarada_-_Chase.mp3",
-    },
-    {
-        id: 9,
-        name: "Open Sea epic",
-        author: "Frank Schroter",
-        release_date: "2019-06-12",
-        genre: "Классическая музыка",
-        duration_in_seconds: 165,
-        album: "Open Sea epic",
-        logo: null,
-        track_file: "https://skypro-music-api.skyeng.tech/media/music_files/Frank_Schroter_-_Open_Sea_epic.mp3",
-    }
-]
+// const favTracks = [
+//     {
+//         id: 8,
+//         name: "Chase",
+//         author: "Alexander Nakarada",
+//         release_date: "2005-06-11",
+//         genre: "Классическая музыка",
+//         duration_in_seconds: 205,
+//         album: "Chase",
+//         logo: null,
+//         track_file: "https://skypro-music-api.skyeng.tech/media/music_files/Alexander_Nakarada_-_Chase.mp3",
+//     },
+//     {
+//         id: 9,
+//         name: "Open Sea epic",
+//         author: "Frank Schroter",
+//         release_date: "2019-06-12",
+//         genre: "Классическая музыка",
+//         duration_in_seconds: 165,
+//         album: "Open Sea epic",
+//         logo: null,
+//         track_file: "https://skypro-music-api.skyeng.tech/media/music_files/Frank_Schroter_-_Open_Sea_epic.mp3",
+//     }
+// ]
 
 export default function Favorites({ isLoading, getTracksError }) {
+
+    const { favTracks = [] } = useGetFavTracksQuery();
 
 
     return (
