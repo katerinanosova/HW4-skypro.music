@@ -2,6 +2,7 @@ import { useState } from "react";
 import Filter from "./Filter";
 import { GetTracks } from "./Track";
 import * as S from './Tracklist.styled';
+import { useGetAllTracksQuery } from "../../API/api-tracks";
 
 
 
@@ -11,6 +12,8 @@ export const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
 
 
 export default function Tracklist() {
+
+    const { data = [] } = useGetAllTracksQuery();
     
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -45,10 +48,7 @@ export default function Tracklist() {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            <GetTracks 
-            // isLoading={isLoading} tracks={tracks}
-            //         getTracksError={getTracksError} 
-            />
+            <GetTracks tracks={data} />
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainCenterblock>

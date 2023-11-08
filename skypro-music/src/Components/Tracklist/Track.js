@@ -7,12 +7,9 @@ import { useGetAllTracksQuery } from '../../API/api-tracks';
 
 
 
+export function GetTracks({ tracks }) {
 
-
-
-export function GetTracks() {
-
-  const { data = [], error, isLoading } = useGetAllTracksQuery();
+  const { error, isLoading } = useGetAllTracksQuery();
 
 
 
@@ -20,9 +17,9 @@ export function GetTracks() {
   const isPlaying = useSelector((store) => store.audioplayer.playing)
   const dispatch = useDispatch()
  
-  const trackList = data.map(track => 
+  const trackList = tracks.map(track => 
         <S.PlaylistItem key={track.id}>
-        <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: data, track: track }))}}>
+        <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: tracks, track: track }))}}>
           <S.TrackTitle>
           <div>
             {isLoading ? <S.TrackTitleImageLoading /> : 
@@ -68,7 +65,6 @@ export function GetTracks() {
       </S.PlaylistItem> 
         )
         return (
-          // getTracksError || trackList
           error || trackList
         );
 }

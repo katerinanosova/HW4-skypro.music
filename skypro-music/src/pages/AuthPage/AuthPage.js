@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import * as S from "./AuthPage.styled";
 import GlobalStyle from "../../GlobalStyles";
-import { loginUser, registerUser } from "../../API/api-user";
+import { getToken, loginUser, registerUser } from "../../API/api-user";
 import { userContext } from "../../userContext";
 
 export default function AuthPage({ isLoginMode }) {
@@ -13,7 +13,8 @@ export default function AuthPage({ isLoginMode }) {
     const [repeatPassword, setRepeatPassword] = useState("");
     const [isNewUserLoading, setIsNewUserLoading] = useState(false);
     const navigate = useNavigate();
-    const { setUser } = useContext(userContext);
+    const { setUser, setToken } = useContext(userContext);
+    
   
     const handleLogin = async () => {
       if (email === '' || password === '') {
@@ -25,6 +26,7 @@ export default function AuthPage({ isLoginMode }) {
           setIsNewUserLoading(false);
           setUser(loggedUser);
           window.localStorage.setItem('user', JSON.stringify(loggedUser));
+
           navigate('/');
           console.log(loggedUser);
         } catch (errorData) {
@@ -43,10 +45,18 @@ export default function AuthPage({ isLoginMode }) {
             setError(ed.email[0])
           } 
         }
+
+        try {
+          const token1 = await getToken({ email, password });
+          setToken(token1);
+          console.log(token1);
+        } catch (tokenError) {
+          console.log(tokenError);
+        }
       }
     };
 
-    
+       
   
     const handleRegister = async () => {
       if (email === '' || password === '') {
