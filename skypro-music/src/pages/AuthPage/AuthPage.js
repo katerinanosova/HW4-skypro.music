@@ -13,7 +13,8 @@ export default function AuthPage({ isLoginMode }) {
     const [repeatPassword, setRepeatPassword] = useState("");
     const [isNewUserLoading, setIsNewUserLoading] = useState(false);
     const navigate = useNavigate();
-    const { setUser, setToken } = useContext(userContext);
+    const { setUser } = useContext(userContext);
+    const [token, setToken] = useState(null);
     
   
     const handleLogin = async () => {
@@ -49,7 +50,7 @@ export default function AuthPage({ isLoginMode }) {
         try {
           const token1 = await getToken({ email, password });
           setToken(token1);
-          console.log(token1);
+          console.log(token);
         } catch (tokenError) {
           console.log(tokenError);
         }

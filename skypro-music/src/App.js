@@ -7,7 +7,7 @@ import { userContext } from "./userContext";
 function App() {
     
   const [user, setUser] = useState(window.localStorage.getItem('user') || null);
-  const [token, setToken] = useState('1');
+
 
   // const [loading, setLoading] = useState(true);
 
@@ -56,7 +56,7 @@ function App() {
   
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <userContext.Provider value={{ user, setUser, token, setToken }}>
+    <userContext.Provider value={{ user, setUser }}>
         <AppRoutes 
         user={user}
         // loading={loading}
