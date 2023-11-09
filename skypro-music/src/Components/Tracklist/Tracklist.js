@@ -18,7 +18,6 @@ export default function Tracklist() {
     const [activeIndex, setActiveIndex] = useState(0);
 
 
-
     return (
       <S.MainCenterblock>
         <S.CenterblockSearch>

@@ -39,8 +39,9 @@ export default function Favorites() {
     "content-type": "application/json"
   }
 
-  const { favTracks = [], isLoading, isError, error } = useGetFavTracksQuery(Mass);
-    
+  const { data = [], isLoading, isError, error } = useGetFavTracksQuery(Mass);
+  
+  
 
   useEffect(() => {
       if (isError) {
@@ -79,7 +80,7 @@ export default function Favorites() {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            <GetTracks isLoading={isLoading} tracks={favTracks}
+            <GetTracks isLoading={isLoading} tracks={data}
                      getTracksError={error ? error.data.detail : ''}/> 
           </S.ContentPlaylist>
         </S.CenterblockContent>
