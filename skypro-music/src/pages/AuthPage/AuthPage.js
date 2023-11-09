@@ -27,7 +27,14 @@ export default function AuthPage({ isLoginMode }) {
           setIsNewUserLoading(false);
           setUser(loggedUser);
           window.localStorage.setItem('user', JSON.stringify(loggedUser));
-
+          try {
+            const token1 = await getToken({ email, password });
+            console.log(token1);
+            setToken(token1);
+            window.localStorage.setItem('token', JSON.stringify(token1));
+          } catch (tokenError) {
+            console.log(tokenError);
+          }
           navigate('/');
           console.log(loggedUser);
         } catch (errorData) {
@@ -47,14 +54,7 @@ export default function AuthPage({ isLoginMode }) {
           } 
         }
 
-        try {
-          const token1 = await getToken({ email, password });
-          console.log(token1);
-          setToken(token1);
-          window.localStorage.setItem('token', JSON.stringify(token1));
-        } catch (tokenError) {
-          console.log(tokenError);
-        }
+
       }
     };
 

@@ -1,15 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-// import { useContext } from 'react';
-// import { userContext } from '../userContext';
 
 
 const baseHost = 'https://skypro-music-api.skyeng.tech/';
-const token = JSON.parse(window.localStorage.getItem('token'));
-console.log(token.access);
-
-
-
 
 export const tracksApi = createApi({
     reducerPath: 'tracksApi',
@@ -22,11 +15,11 @@ export const tracksApi = createApi({
         }),
 
         getFavTracks: builder.query({
-            query: () => 'catalog/track/favorite/all/',
-            headers: {
-                Authorization: `Bearer ${token.access}`
-            }
-
+            query: (Mass) => ({
+                url: 'catalog/track/favorite/all/',
+                method: 'GET',
+                headers: Mass
+            }) 
         })
     })
 })

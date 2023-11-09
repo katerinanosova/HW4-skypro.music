@@ -59,7 +59,7 @@ function App() {
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <userContext.Provider value={{ user, setUser, token, setToken }}>
         <AppRoutes 
-        user={user}
+        // user={user}
         // loading={loading}
         // tracks={tracks}
         // getTracksError={getTracksError}

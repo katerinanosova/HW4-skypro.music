@@ -7,7 +7,9 @@ import ProtectedRoute from "./Components/protected-route";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import Layout from "./Components/Layout/layout";
 
-export default function AppRoutes ({ user }) {
+
+export default function AppRoutes () {
+
     
     return (
         <Routes>
@@ -16,7 +18,7 @@ export default function AppRoutes ({ user }) {
                         
             <Route path="*" element={<NotFound />} />
 
-            <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
+            <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<Layout 
                 // loading={loading}
                  />}>

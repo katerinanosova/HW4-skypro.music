@@ -1,8 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-export default function ProtectedRoute ({ redirectPath = "/login", isAllowed }) {
+export default function ProtectedRoute ({ redirectPath = "/login" }) {
     
-    if (!isAllowed) {
+    const user = JSON.parse(window.localStorage.getItem('user'));
+
+    if (!user) {
       return <Navigate to={redirectPath} replace />;
     }
   

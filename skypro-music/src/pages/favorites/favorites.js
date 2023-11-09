@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useGetFavTracksQuery } from "../../API/api-tracks";
 import { refreshToken } from "../../API/api-user";
 import { GetTracks } from "../../Components/Tracklist/Track";
@@ -33,14 +33,24 @@ import { userContext } from "../../userContext";
 
 export default function Favorites() {
 
-    const { favTracks = [], isLoading, error } = useGetFavTracksQuery();
-    const { token } = useContext(userContext);
-    
-    if (error) {
-      const newToken = refreshToken({ token: token.refresh });
-      console.log(newToken);
+  const { token } = useContext(userContext);
+  const Mass = {
+    Authorization: `Bearer ${token.access}`,
+    "content-type": "application/json"
+  }
 
-    }
+  const { favTracks = [], isLoading, isError, error } = useGetFavTracksQuery(Mass);
+    
+
+  useEffect(() => {
+      if (isError) {
+        if (error.status === 401) {
+          refreshToken({ token: token.refresh });
+          // refetch();
+        }
+      }
+    }, [isError, error])
+    
 
 
 

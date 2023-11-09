@@ -12,10 +12,12 @@ import { userContext } from "../../userContext";
 
 export default function Layout() {
 
-    const { setUser } = useContext(userContext);
+    const { setUser, setToken } = useContext(userContext);
     const userLogout = () => {
         setUser(null);
+        setToken(null);
         window.localStorage.removeItem('user');
+        window.localStorage.removeItem('token');
       }
   
 
