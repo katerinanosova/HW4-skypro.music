@@ -1,8 +1,11 @@
 /* eslint-disable object-shorthand */
 import { useDispatch, useSelector } from 'react-redux';
+import { useContext, useState } from 'react';
 import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
 import { setCurrentTrack } from '../../store/audioplayer/actions';
+import { useAddFavTrackMutation, useDeleteFavTrackMutation } from '../../API/api-tracks';
+import { userContext } from '../../userContext';
 
 
 
@@ -17,9 +20,35 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
     {id: 4, name: "Non Stop", author: "Стоункат, Psychopath", album: "Non Stop", duration_in_seconds: 144},
   ]
 
+  const { token, user } = useContext(userContext);
+  
   const playingTrack = useSelector((store) => store.audioplayer.track)
   const isPlaying = useSelector((store) => store.audioplayer.playing)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [addFavTrack, {isError, error}] = useAddFavTrackMutation();
+  const [deleteFavTrack] = useDeleteFavTrackMutation();
+
+  const likedByUser = Boolean(tracks?.stared_user?.find((staredUser) => staredUser.id === user.id))
+  const [isLiked, setIsLiked] = useState(likedByUser);
+
+  async function handleLikeDislikeTrack (id) {
+
+    const Mass = {
+      Authorization: `Bearer ${token.access}`,
+      "content-type": "application/json"
+    }
+
+    if (isLiked) {
+      setIsLiked(false);
+      await deleteFavTrack({ id, Mass }).unwrap();
+    } else {
+      setIsLiked(true);
+      await addFavTrack({ id, Mass }).unwrap();
+        if (isError) {
+          console.log(error);
+        }
+    }
+  }
 
   if (isLoading) {
     return (
@@ -79,9 +108,9 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
               {track.album}
               </S.TrackAlbumLink>     
           </S.TrackAlbum>
-          <S.TrackTime>
-            <S.TrackTimeSvg alt="time">
-              <use xlinkHref="img/icon/sprite.svg#icon-like" />
+          <S.TrackTime onClick={() => {handleLikeDislikeTrack(track.id)}}>
+            <S.TrackTimeSvg alt="time" >
+              <use xlinkHref={isLiked ? "img/icon/sprite.svg#icon-like-active" : "img/icon/sprite.svg#icon-like"} />
             </S.TrackTimeSvg>
             <S.TrackTimeText>{getTrackDuration(track.duration_in_seconds)}</S.TrackTimeText>
           </S.TrackTime>         

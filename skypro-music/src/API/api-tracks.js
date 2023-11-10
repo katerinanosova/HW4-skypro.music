@@ -6,6 +6,7 @@ const baseHost = 'https://skypro-music-api.skyeng.tech/';
 
 export const tracksApi = createApi({
     reducerPath: 'tracksApi',
+    tagTypes: ['Tracks'],
     baseQuery: fetchBaseQuery({
         baseUrl: baseHost,
     }),
@@ -19,10 +20,34 @@ export const tracksApi = createApi({
                 url: 'catalog/track/favorite/all/',
                 method: 'GET',
                 headers: Mass
-            }) 
+            }),
+            providesTags: (result) => result
+              ? [
+                  ...result.map(({ id }) => ({ type: 'Tracks', id })),
+                  { type: 'Tracks', id: 'LIST' },
+                ]
+              : [{ type: 'Tracks', id: 'LIST' }], 
+        }),
+
+        addFavTrack: builder.mutation({
+            query: ({ id, Mass }) => ({
+                url: `catalog/track/${id}/favorite/`,
+                method: 'POST',
+                headers: Mass
+            }),
+            invalidatesTags: [{ type: 'Tracks', id: 'LIST' }]
+        }),
+
+        deleteFavTrack: builder.mutation({
+            query: ({ id, Mass }) => ({
+                url: `catalog/track/${id}/favorite/`,
+                method: 'DELETE',
+                headers: Mass
+            }),
+            invalidatesTags: [{ type: 'Tracks', id: 'LIST' }]
         })
     })
 })
 
-export const { useGetAllTracksQuery, useGetFavTracksQuery } = tracksApi;
+export const { useGetAllTracksQuery, useGetFavTracksQuery, useAddFavTrackMutation, useDeleteFavTrackMutation } = tracksApi;
 
