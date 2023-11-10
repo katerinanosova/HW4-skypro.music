@@ -20,7 +20,7 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
         <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: tracks, track: track }))}}>
           <S.TrackTitle>
           <div>
-            {isLoading ? <S.TrackTitleImageLoading /> : 
+            {isLoading || getTracksError ? <S.TrackTitleImageLoading /> : 
             <S.TrackTitleImage>
               {playingTrack && playingTrack.id === track.id ? 
               <S.TrackTitleDotSvg $isPlaying={isPlaying} alt="music" />
@@ -29,7 +29,7 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
             </S.TrackTitleSvg> }
            </S.TrackTitleImage>}
           </div>
-          {isLoading ? <S.TrackTitleTextLoading /> : <S.TrackTitleText>
+          {isLoading || getTracksError ? <S.TrackTitleTextLoading /> : <S.TrackTitleText>
             <S.TrackTitleLink href="http://">
                 {track.name} 
                 <S.TrackTitleSpan>
@@ -38,7 +38,7 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
             </S.TrackTitleLink>
           </S.TrackTitleText> }
           </S.TrackTitle>
-          {isLoading 
+          {isLoading || getTracksError
           ? <S.TrackAuthorLoading /> 
           : <S.TrackAuthor>
             <S.TrackAuthorLink href="http://">
@@ -47,13 +47,13 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
           </S.TrackAuthor> }
           
           <S.TrackAlbum>
-            {isLoading
+            {isLoading || getTracksError
             ? <S.TrackAlbumLinkLoading />
             : <S.TrackAlbumLink href="http://">
               {track.album}
               </S.TrackAlbumLink>}     
           </S.TrackAlbum>
-          {isLoading ? '' : <S.TrackTime>
+          {isLoading || getTracksError ? '' : <S.TrackTime>
             <S.TrackTimeSvg alt="time">
               <use xlinkHref="img/icon/sprite.svg#icon-like" />
             </S.TrackTimeSvg>
@@ -63,6 +63,6 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
       </S.PlaylistItem> 
         )
         return (
-          getTracksError || trackList
+          trackList
         );
 }
