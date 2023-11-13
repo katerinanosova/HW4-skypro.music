@@ -17,6 +17,7 @@ export default function Favorites() {
 
   const { data = [], isLoading, isError, error } = useGetFavTracksQuery(Mass);
 
+  console.log(data);
   const getNewToken = async () => {
     const newAccessToken = await refreshToken({ token: token.refresh });
     setToken({ access: newAccessToken })
@@ -60,8 +61,13 @@ export default function Favorites() {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            <GetTracks isLoading={isLoading} tracks={data}
-                     getTracksError={error ? error.data.detail : ''}/> 
+          {error && error}
+            {!error && data.map((track) => (
+              <GetTracks key={track.id} track={track} tracks={data} isLoading={isLoading} getNewToken={getNewToken}  />
+            ))}
+
+            {/* <GetTracks isLoading={isLoading} tracks={data} getNewToken={getNewToken}
+                     getTracksError={error ? error.data.detail : ''}/>  */}
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainCenterblock>

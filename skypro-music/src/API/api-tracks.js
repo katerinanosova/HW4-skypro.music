@@ -21,12 +21,8 @@ export const tracksApi = createApi({
                 method: 'GET',
                 headers: Mass
             }),
-            providesTags: (result) => result
-              ? [
-                  ...result.map(({ id }) => ({ type: 'Tracks', id })),
-                  { type: 'Tracks', id: 'LIST' },
-                ]
-              : [{ type: 'Tracks', id: 'LIST' }], 
+            providesTags: ['Tracks']
+               
         }),
 
         addFavTrack: builder.mutation({
@@ -35,7 +31,7 @@ export const tracksApi = createApi({
                 method: 'POST',
                 headers: Mass
             }),
-            invalidatesTags: [{ type: 'Tracks', id: 'LIST' }]
+            invalidatesTags: ['Tracks']
         }),
 
         deleteFavTrack: builder.mutation({
@@ -44,7 +40,7 @@ export const tracksApi = createApi({
                 method: 'DELETE',
                 headers: Mass
             }),
-            invalidatesTags: [{ type: 'Tracks', id: 'LIST' }]
+            invalidatesTags: ['Tracks']
         })
     })
 })

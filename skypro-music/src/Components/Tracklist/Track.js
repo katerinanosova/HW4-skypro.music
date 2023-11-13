@@ -1,6 +1,6 @@
 /* eslint-disable object-shorthand */
 import { useDispatch, useSelector } from 'react-redux';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
 import { setCurrentTrack } from '../../store/audioplayer/actions';
@@ -10,7 +10,7 @@ import { userContext } from '../../userContext';
 
 
 
-export function GetTracks({ tracks, isLoading, getTracksError }) {
+export function GetTracks({ track, tracks, isLoading }) {
 
   const defaultTracks =
     [ 
@@ -25,11 +25,15 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
   const playingTrack = useSelector((store) => store.audioplayer.track)
   const isPlaying = useSelector((store) => store.audioplayer.playing)
   const dispatch = useDispatch();
-  const [addFavTrack, {isError, error}] = useAddFavTrackMutation();
+  const [addFavTrack] = useAddFavTrackMutation();
   const [deleteFavTrack] = useDeleteFavTrackMutation();
 
-  const likedByUser = Boolean(tracks?.stared_user?.find((staredUser) => staredUser.id === user.id))
+  const likedByUser = Boolean(track?.stared_user?.find((staredUser) => staredUser.id === user.id))
   const [isLiked, setIsLiked] = useState(likedByUser);
+
+  useEffect(() => {
+    setIsLiked(likedByUser)
+  }, [likedByUser]);
 
   async function handleLikeDislikeTrack (id) {
 
@@ -40,20 +44,21 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
 
     if (isLiked) {
       setIsLiked(false);
-      await deleteFavTrack({ id, Mass }).unwrap();
+      deleteFavTrack({ id, Mass });
+
     } else {
       setIsLiked(true);
-      await addFavTrack({ id, Mass }).unwrap();
-        if (isError) {
-          console.log(error);
-        }
+      addFavTrack({ id, Mass });
+
     }
+
+
   }
 
   if (isLoading) {
     return (
-      defaultTracks.map(track => 
-        <S.PlaylistItem key={track.id}>
+      defaultTracks.map(trackDefault => 
+        <S.PlaylistItem key={trackDefault.id}>
         <S.PlaylistTrack >
           <S.TrackTitle>
             <div>
@@ -76,8 +81,9 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
 
 
  
-  const trackList = tracks.map(track => 
-        <S.PlaylistItem key={track.id}>
+
+        return (
+          <S.PlaylistItem key={track.id}>
         <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: tracks, track: track }))}}>
           <S.TrackTitle>
           <div> 
@@ -108,16 +114,16 @@ export function GetTracks({ tracks, isLoading, getTracksError }) {
               {track.album}
               </S.TrackAlbumLink>     
           </S.TrackAlbum>
-          <S.TrackTime onClick={() => {handleLikeDislikeTrack(track.id)}}>
+          <S.TrackTime onClick={(event) => {
+            handleLikeDislikeTrack(track.id)
+            event.stopPropagation()}
+            }>
             <S.TrackTimeSvg alt="time" >
               <use xlinkHref={isLiked ? "img/icon/sprite.svg#icon-like-active" : "img/icon/sprite.svg#icon-like"} />
             </S.TrackTimeSvg>
             <S.TrackTimeText>{getTrackDuration(track.duration_in_seconds)}</S.TrackTimeText>
           </S.TrackTime>         
         </S.PlaylistTrack>
-      </S.PlaylistItem> 
-        )
-        return (
-          getTracksError || trackList
+      </S.PlaylistItem>
         );
 }

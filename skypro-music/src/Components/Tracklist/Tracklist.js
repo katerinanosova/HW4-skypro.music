@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Filter from "./Filter";
 import { GetTracks } from "./Track";
 import * as S from './Tracklist.styled';
 import { useGetAllTracksQuery } from "../../API/api-tracks";
+import { userContext } from "../../userContext";
+import { refreshToken } from "../../API/api-user";
 
 
 
@@ -13,9 +15,17 @@ export const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
 
 export default function Tracklist() {
 
+  const { token, setToken } = useContext(userContext);
+
     const { data = [], error, isLoading } = useGetAllTracksQuery();
     
     const [activeIndex, setActiveIndex] = useState(0);
+
+    const getNewToken = async () => {
+      const newAccessToken = await refreshToken({ token: token.refresh });
+      setToken({ access: newAccessToken })
+    }
+
 
 
     return (
@@ -49,7 +59,11 @@ export default function Tracklist() {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            <GetTracks tracks={data} isLoading={isLoading} getTracksError={error}  />
+            {error && error}
+            {!error && data.map((track) => (
+              <GetTracks key={track.id} track={track} tracks={data} isLoading={isLoading} getNewToken={getNewToken}  />
+            ))}
+
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainCenterblock>
