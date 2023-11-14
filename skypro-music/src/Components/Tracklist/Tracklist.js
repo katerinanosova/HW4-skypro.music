@@ -6,7 +6,7 @@ import * as S from './Tracklist.styled';
 import { useGetAllTracksQuery } from "../../API/api-tracks";
 import { userContext } from "../../userContext";
 import { refreshToken } from "../../API/api-user";
-import { setInitialTracksForFilter } from "../../store/audioplayer/actions";
+import { setInitialTracksForFilter, setSearch } from "../../store/audioplayer/actions";
 
 
 
@@ -61,6 +61,7 @@ export default function Tracklist() {
             type="search"
             placeholder="Поиск"
             name="search"
+            onChange={(e) => {dispatch(setSearch({ value: e.target.value, tracks: filteredData }))}}
           />
         </S.CenterblockSearch>
         <S.CenterblockH2>Треки</S.CenterblockH2>

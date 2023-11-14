@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, PLAY, PAUSE, NEXT_TRACK, PREV_TRACK, SHUFFLE, FILTER, SET_INITIAL_TRACKS } from "./actions";
+import { SET_CURRENT_TRACK, PLAY, PAUSE, NEXT_TRACK, PREV_TRACK, SHUFFLE, FILTER, SET_INITIAL_TRACKS, SEARCH } from "./actions";
 
 const initialState = {
     playing: false,
@@ -15,6 +15,7 @@ const initialState = {
         isActiveSort: false
     },
     initialTracksForFilter: [],
+    initialTracksForSearch: []
 }
 
 export default function audioplayerReducer(state = initialState, action) {
@@ -99,14 +100,11 @@ export default function audioplayerReducer(state = initialState, action) {
 
         case FILTER: {
             const currentPlaylist = action.payload.tracks;
-            console.log(action.payload);
 
             if (action.payload.name === 'genre') {
 
             // для опции, если есть параллельно фильтры по имени
             const playlistWithAuthorFilter = state.initialTracksForFilter.filter(track => state.FilterCriteria.author?.includes(track.author));
-
-            console.log(playlistWithAuthorFilter);
 
                 // удаляем фильтр при повторном нажатии
                 if (state.FilterCriteria.genre?.includes(action.payload.item)) {
@@ -140,14 +138,12 @@ export default function audioplayerReducer(state = initialState, action) {
                     
                 }
 
-                
-                console.log(state.FilterCriteria);
                 const newGenresFilter = [...state.FilterCriteria.genre, action.payload.item];
 
                 const PL = state.FilterCriteria.isActiveAuthor ? playlistWithAuthorFilter : state.initialTracksForFilter;
 
                 const newFilteredPlaylist = PL.filter(track => newGenresFilter.includes(track.genre));
-                console.log(newFilteredPlaylist);
+
 
                 return {
                     ...state,
@@ -268,6 +264,31 @@ export default function audioplayerReducer(state = initialState, action) {
                 ...state,
                 filteredPlaylist: []
             }
+        }
+
+        case SEARCH: {
+            const currentPlaylist = action.payload.tracks;
+
+            if (action.payload.value.length > 0) {
+                const searchedPlaylist = currentPlaylist.filter((item) => 
+                item.name
+                .toLocaleLowerCase()
+                .includes(action.payload.value.toLocaleLowerCase()));
+
+                if (state.FilterCriteria.isActiveAuthor || state.FilterCriteria.isActiveGenre || state.FilterCriteria.isActiveSort ) {
+                    return {
+                        ...state,
+                        filteredPlaylist: searchedPlaylist,
+                    }
+                }
+
+                return {
+                    ...state,
+                    initialTracksForFilter: searchedPlaylist,
+                }
+            }
+
+            return state
         }
 
         default:
