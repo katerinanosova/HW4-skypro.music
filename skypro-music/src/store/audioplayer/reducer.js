@@ -226,7 +226,11 @@ export default function audioplayerReducer(state = initialState, action) {
                         ...state,
                         filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(a.release_date) - new Date(b.release_date)),
                         FilterCriteria: {
-                            isActiveSort: true
+                            isActiveSort: true,
+                            isActiveAuthor: state.FilterCriteria.isActiveAuthor,
+                            author: state.FilterCriteria.author,
+                            isActiveGenre: state.FilterCriteria.isActiveGenre,
+                            genre: state.FilterCriteria.genre 
                         }
                     }
                 }
@@ -235,7 +239,11 @@ export default function audioplayerReducer(state = initialState, action) {
                         ...state,
                         filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(b.release_date) - new Date(a.release_date)),
                         FilterCriteria: {
-                            isActiveSort: true
+                            isActiveSort: true,
+                            isActiveAuthor: state.FilterCriteria.isActiveAuthor,
+                            author: state.FilterCriteria.author,
+                            isActiveGenre: state.FilterCriteria.isActiveGenre,
+                            genre: state.FilterCriteria.genre 
                         }
                     }
                 }
@@ -244,7 +252,11 @@ export default function audioplayerReducer(state = initialState, action) {
                         ...state,
                         filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(a.id) - new Date(b.id)),
                         FilterCriteria: {
-                            isActiveSort: false
+                            isActiveSort: false,
+                            isActiveAuthor: state.FilterCriteria.isActiveAuthor,
+                            author: state.FilterCriteria.author,
+                            isActiveGenre: state.FilterCriteria.isActiveGenre,
+                            genre: state.FilterCriteria.genre 
                         }
                     }
                 }
