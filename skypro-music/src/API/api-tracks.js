@@ -41,9 +41,17 @@ export const tracksApi = createApi({
                 headers: Mass
             }),
             invalidatesTags: ['Tracks']
+        }),
+
+        getSelectedTracks: builder.query({
+            query: ({ id }) => ({
+                url: `/catalog/selection/${id}/`,
+                method: 'GET'
+            }),
+            providesTags: ['Tracks']
         })
     })
 })
 
-export const { useGetAllTracksQuery, useGetFavTracksQuery, useAddFavTrackMutation, useDeleteFavTrackMutation } = tracksApi;
+export const { useGetAllTracksQuery, useGetFavTracksQuery, useAddFavTrackMutation, useDeleteFavTrackMutation, useGetSelectedTracksQuery } = tracksApi;
 

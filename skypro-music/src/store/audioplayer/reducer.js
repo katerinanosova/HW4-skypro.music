@@ -1,11 +1,13 @@
-import { SET_CURRENT_TRACK, PLAY, PAUSE, NEXT_TRACK, PREV_TRACK, SHUFFLE } from "./actions";
+import { SET_CURRENT_TRACK, PLAY, PAUSE, NEXT_TRACK, PREV_TRACK, SHUFFLE, FILTER } from "./actions";
 
 const initialState = {
     playing: false,
     playlist: [],
     track: null,
     shuffled: false,
-    shuffledPlaylist: []
+    shuffledPlaylist: [],
+    filtered: false,
+    filteredPlaylist: []
 }
 
 export default function audioplayerReducer(state = initialState, action) {
@@ -77,6 +79,67 @@ export default function audioplayerReducer(state = initialState, action) {
             return {
                 ...state,
                 shuffled: !state.shuffled
+            }
+        }
+
+        case FILTER: {
+            const currentPlaylist = action.payload.tracks;
+
+            if (action.payload.name === 'genre') {
+                return {
+                    ...state,
+                    filtered: true,
+                    filteredPlaylist: currentPlaylist.filter(track => track.genre === action.payload.item)
+                }
+            }
+
+            if (action.payload.name === 'author') {
+                return {
+                    ...state,
+                    filtered: true,
+                    filteredPlaylist: currentPlaylist.filter(track => track.author === action.payload.item)
+                }              
+            }
+
+            if (action.payload.name === 'release_date') {
+
+                if (action.payload.item === 'Сначала старые') {
+                    return {
+                        ...state,
+                        filtered: true,
+                        filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
+                    }
+                }
+
+                if (action.payload.item === 'Сначала новые') {
+                    return {
+                        ...state,
+                        filtered: true,
+                        filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
+                    }
+                }
+
+                if (action.payload.item === 'По умолчанию') {
+                    return {
+                        ...state,
+                        filtered: true,
+                        filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(a.id) - new Date(b.id))
+                    }
+                }
+
+                return {
+                    ...state,
+                    filtered: false,
+                    filteredPlaylist: currentPlaylist
+                }
+            }
+
+
+
+            return {
+                ...state,
+                filtered: !state.filtered,
+                filteredPlaylist: []
             }
         }
 

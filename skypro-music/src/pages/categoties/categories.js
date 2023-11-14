@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { GetTracks } from "../../Components/Tracklist/Track";
 import * as S from '../../Components/Tracklist/Tracklist.styled';
+import { useGetSelectedTracksQuery } from "../../API/api-tracks";
+
 
 export const category1 = [
     {
@@ -27,9 +29,12 @@ export const category1 = [
     }
 ]
 
-export default function Categories({ isLoading, getTracksError }) {
+export default function Categories() {
     const params = useParams();
-    
+
+    const { data, isLoading, error } = useGetSelectedTracksQuery({ id: params.id });
+
+     
     
     return (
         <S.MainCenterblock>
@@ -43,7 +48,7 @@ export default function Categories({ isLoading, getTracksError }) {
             name="search"
           />
         </S.CenterblockSearch>
-        <S.CenterblockH2>Categories page {params.id}</S.CenterblockH2>
+        <S.CenterblockH2>{data?.name}</S.CenterblockH2>
         <S.CenterblockContent>
           <S.ContentTitle>
             <S.PlaylistTitleCol01>Трек</S.PlaylistTitleCol01>
@@ -56,8 +61,10 @@ export default function Categories({ isLoading, getTracksError }) {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            <GetTracks isLoading={isLoading} tracks={category1}
-                    getTracksError={getTracksError} />
+          {error && error}
+            {!error && data?.items.map((track) => (
+              <GetTracks key={track.id} track={track} tracks={data?.items} isLoading={isLoading}  />
+            ))}
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainCenterblock>

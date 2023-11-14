@@ -17,7 +17,6 @@ export default function Favorites() {
 
   const { data = [], isLoading, isError, error } = useGetFavTracksQuery(Mass);
 
-  console.log(data);
   const getNewToken = async () => {
     const newAccessToken = await refreshToken({ token: token.refresh });
     setToken({ access: newAccessToken })

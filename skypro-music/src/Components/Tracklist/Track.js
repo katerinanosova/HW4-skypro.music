@@ -14,11 +14,12 @@ export function GetTracks({ track, tracks, isLoading }) {
 
   const defaultTracks =
     [ 
-    {id: 1, name: "Guilt", author: "Nero", album: "Welcome Reality", duration_in_seconds: 284},
-    {id: 2, name: "Elektro", author: "Dynoro, Outwork, Mr. Gee", album: "Elektro", duration_in_seconds: 144 },
-    {id: 3, name: "Iam Fire", author: "Ali Bakgor", album: "Iam Fire", duration_in_seconds: 144},
-    {id: 4, name: "Non Stop", author: "Стоункат, Psychopath", album: "Non Stop", duration_in_seconds: 144},
+    {id: 1, name: "Guilt", release_date: "1991-09-07", genre: 'rock', author: "Nero", album: "Welcome Reality", duration_in_seconds: 284},
+    {id: 2, name: "Elektro", release_date: "1994-09-07", genre: 'rock', author: "Dynoro, Outwork, Mr. Gee", album: "Elektro", duration_in_seconds: 144 },
+    {id: 3, name: "Iam Fire", release_date: "1989-09-07", genre: 'classic', author: "Ali Bakgor", album: "Iam Fire", duration_in_seconds: 144},
+    {id: 4, name: "Non Stop",  release_date: "1993-09-07", genre: 'disco', author: "Стоункат, Psychopath", album: "Non Stop", duration_in_seconds: 144},
   ]
+
 
   const { token, user } = useContext(userContext);
   
@@ -80,8 +81,6 @@ export function GetTracks({ track, tracks, isLoading }) {
   }
 
 
- 
-
         return (
           <S.PlaylistItem key={track.id}>
         <S.PlaylistTrack onClick={() => {dispatch(setCurrentTrack({ playlist: tracks, track: track }))}}>
@@ -97,7 +96,7 @@ export function GetTracks({ track, tracks, isLoading }) {
           </div>
           <S.TrackTitleText>
             <S.TrackTitleLink href="http://">
-                {track.name} 
+                {track.name}
                 <S.TrackTitleSpan>
                 {track.version ? track.version : ''}
                 </S.TrackTitleSpan>

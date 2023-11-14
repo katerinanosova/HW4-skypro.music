@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+import { useContext,  useState } from "react";
+import { useSelector } from "react-redux";
 import Filter from "./Filter";
 import { GetTracks } from "./Track";
 import * as S from './Tracklist.styled';
@@ -8,27 +9,38 @@ import { refreshToken } from "../../API/api-user";
 
 
 
-export const genres = ['Рок', 'Техно', 'Поп', 'Металл', 'Панк-рок'];
-export const years = [2000, 2001, 2002];
-export const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
+
+// export const genres = ['Рок', 'Техно', 'Поп', 'Металл', 'Панк-рок'];
+// export const years = [2000, 2001, 2002];
+// export const author = ['Nero', 'Ali Bakgor', 'Стоункат, Psychopath']
 
 
 export default function Tracklist() {
 
   const { token, setToken } = useContext(userContext);
 
-    const { data = [], error, isLoading } = useGetAllTracksQuery();
+  const { data = [], error, isLoading } = useGetAllTracksQuery();
     
-    const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-    const getNewToken = async () => {
-      const newAccessToken = await refreshToken({ token: token.refresh });
-      setToken({ access: newAccessToken })
-    }
+  const isFiltered = useSelector((store) => store.audioplayer.filtered);
+  const filteredTrackList = useSelector((store) => store.audioplayer.filteredPlaylist);
+
+  const getNewToken = async () => {
+    const newAccessToken = await refreshToken({ token: token.refresh });
+      setToken({ access: newAccessToken });
+  }
+
+  const genres = [...new Set(data.map(track => track.genre))];
+  const author = [...new Set(data.map(track => track.author))];
+  const years = ['По умолчанию', 'Сначала новые', 'Сначала старые' ];
 
 
+  const filteredData = isFiltered ? filteredTrackList : data;
+  console.log(filteredData);
 
-    return (
+
+  return (
       <S.MainCenterblock>
         <S.CenterblockSearch>
           <S.SearchSvg>
@@ -43,9 +55,9 @@ export default function Tracklist() {
         <S.CenterblockH2>Треки</S.CenterblockH2>
         <S.CenterblockFilter>
           <S.FilterTitle>Искать по:</S.FilterTitle>
-          <Filter type='исполнителю' filterName={author} isActive={activeIndex === 1} onShow={() => setActiveIndex(1)} onHide={() => setActiveIndex(0)} />
-          <Filter type='году выпуска' filterName={years} isActive={activeIndex === 2} onShow={() => setActiveIndex(2)} onHide={() => setActiveIndex(0)} />
-          <Filter type='жанру' filterName={genres} isActive={activeIndex === 3} onShow={() => setActiveIndex(3)} onHide={() => setActiveIndex(0)} />          
+          <Filter type='исполнителю' filterName='author' filterOptions={author} tracks={isFiltered ? filteredTrackList : data} isActive={activeIndex === 1} onShow={() => setActiveIndex(1)} onHide={() => setActiveIndex(0)} />
+          <Filter type='году выпуска' filterName='release_date' filterOptions={years} tracks={isFiltered ? filteredTrackList : data} isActive={activeIndex === 2} onShow={() => setActiveIndex(2)} onHide={() => setActiveIndex(0)} />
+          <Filter type='жанру' filterName='genre' filterOptions={genres} tracks={isFiltered ? filteredTrackList : data} isActive={activeIndex === 3} onShow={() => setActiveIndex(3)} onHide={() => setActiveIndex(0)} />          
         </S.CenterblockFilter>
         <S.CenterblockContent>
           <S.ContentTitle>
@@ -60,8 +72,8 @@ export default function Tracklist() {
           </S.ContentTitle>
           <S.ContentPlaylist>
             {error && error}
-            {!error && data.map((track) => (
-              <GetTracks key={track.id} track={track} tracks={data} isLoading={isLoading} getNewToken={getNewToken}  />
+            {!error && filteredData.map((track) => (
+              <GetTracks key={track.id} track={track} tracks={filteredData} isLoading={isLoading} getNewToken={getNewToken}  />
             ))}
 
           </S.ContentPlaylist>
