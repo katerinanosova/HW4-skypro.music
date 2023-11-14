@@ -5,6 +5,7 @@ export const NEXT_TRACK = 'NEXT_TRACK';
 export const PREV_TRACK = 'PREV_TRACK';
 export const SHUFFLE = 'SHUFFLE';
 export const FILTER = 'FILTER';
+export const SET_INITIAL_TRACKS = 'SET_INITIAL_TRACKS';
 
 export const setCurrentTrack = ({ playlist, track }) => ({
     type: SET_CURRENT_TRACK,
@@ -20,6 +21,13 @@ export const setFilter = ({ name, item, tracks }) => ({
         name,
         item,
         tracks
+    }
+})
+
+export const setInitialTracksForFilter = ({ data }) => ({
+    type: SET_INITIAL_TRACKS,
+    payload: {
+        data
     }
 })
 
