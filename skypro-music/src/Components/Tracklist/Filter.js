@@ -11,17 +11,11 @@ export default function Filter ({ type, filterOptions, filterName, tracks, isAct
     const [isFilter, setIsFilter] = useState(false);
 
 
-    const activeFilter = ({ item, name }) => {
-        setIsFilter(true);
+
+    const toggleFilter = ({ item, name }) => {
+        setIsFilter(!isFilter);
         dispatch(setFilter({ item, name, tracks }))
     }
-
-    const cancelFilter = ({ item, name }) => {
-        setIsFilter(false);
-        dispatch(setFilter({ item, name, tracks }))
-    }
-
-    // const toggleFilter = isFilter ? activeFilter : cancelFilter;
 
 
     return (
@@ -31,7 +25,7 @@ export default function Filter ({ type, filterOptions, filterName, tracks, isAct
             {isActive ? 
             <S.FilterOption>
                 {filterOptions.map((item, index) =>
-                <S.FilterItem key={index} onClick={() => isFilter ? activeFilter({ item, name: filterName, tracks }) : cancelFilter({ item, name: filterName, tracks })}>{item}</S.FilterItem>)}
+                <S.FilterItem key={index} onClick={() => toggleFilter({ item, name: filterName, tracks })} $isFilter={isFilter}>{item}</S.FilterItem>)}
             </S.FilterOption> 
             : ''}
         </S.FilterButton>)  

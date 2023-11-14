@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 
 
 export const FilterItem = styled.option`
+color: ${({ $isFilter }) => ($isFilter ? '#B672FF' : '#ffffff')};
 &:hover {
     color: #B672FF;
     text-decoration: underline;
