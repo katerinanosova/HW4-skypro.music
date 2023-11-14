@@ -18,6 +18,7 @@ const initialState = {
 }
 
 export default function audioplayerReducer(state = initialState, action) {
+
     switch (action.type) {
         case SET_CURRENT_TRACK: {
             return {
@@ -105,6 +106,8 @@ export default function audioplayerReducer(state = initialState, action) {
             // для опции, если есть параллельно фильтры по имени
             const playlistWithAuthorFilter = state.initialTracksForFilter.filter(track => state.FilterCriteria.author?.includes(track.author));
 
+            console.log(playlistWithAuthorFilter);
+
                 // удаляем фильтр при повторном нажатии
                 if (state.FilterCriteria.genre?.includes(action.payload.item)) {
                     const newGenresFilter = state.FilterCriteria.genre.filter(item => item !== action.payload.item)
@@ -117,7 +120,9 @@ export default function audioplayerReducer(state = initialState, action) {
                             filteredPlaylist: newFilteredPlaylist,
                             FilterCriteria: {
                                 isActiveGenre: true,
-                                genre: newGenresFilter
+                                genre: newGenresFilter,
+                                isActiveAuthor: state.FilterCriteria.isActiveAuthor,
+                                author: state.FilterCriteria.author
                             }
                         }
                     }
@@ -127,14 +132,16 @@ export default function audioplayerReducer(state = initialState, action) {
                         filteredPlaylist: state.FilterCriteria.isActiveAuthor ? playlistWithAuthorFilter : state.initialTracksForFilter,
                         FilterCriteria: {
                             isActiveGenre: false,
-                            genre: newGenresFilter
+                            genre: newGenresFilter,
+                            isActiveAuthor: state.FilterCriteria.isActiveAuthor,
+                            author: state.FilterCriteria.author
                         }
                     }
                     
                 }
 
                 
-
+                console.log(state.FilterCriteria);
                 const newGenresFilter = [...state.FilterCriteria.genre, action.payload.item];
 
                 const PL = state.FilterCriteria.isActiveAuthor ? playlistWithAuthorFilter : state.initialTracksForFilter;
@@ -147,9 +154,12 @@ export default function audioplayerReducer(state = initialState, action) {
                     filteredPlaylist: newFilteredPlaylist,
                     FilterCriteria: {
                         isActiveGenre: true,
-                        genre: newGenresFilter 
+                        genre: newGenresFilter,
+                        isActiveAuthor: state.FilterCriteria.isActiveAuthor,
+                        author: state.FilterCriteria.author
                     }
                 }
+                
             }
 
             if (action.payload.name === 'author') {
@@ -169,7 +179,9 @@ export default function audioplayerReducer(state = initialState, action) {
                         filteredPlaylist: newFilteredPlaylist,
                         FilterCriteria: {
                             isActiveAuthor: true,
-                            author: newAuthorFilter
+                            author: newAuthorFilter,
+                            isActiveGenre: state.FilterCriteria.isActiveGenre,
+                            genre: state.FilterCriteria.genre
                         }
                     }
                 }
@@ -179,14 +191,15 @@ export default function audioplayerReducer(state = initialState, action) {
                     filteredPlaylist: state.FilterCriteria.isActiveGenre ? playlistWithGenreFilter : state.initialTracksForFilter,
                     FilterCriteria: {
                         isActiveAuthor: false,
-                        author: newAuthorFilter
+                        author: newAuthorFilter,
+                        isActiveGenre: state.FilterCriteria.isActiveGenre,
+                        genre: state.FilterCriteria.genre
                     }
                 }
             }
 
+            
             const newAuthorFilter = [...state.FilterCriteria.author, action.payload.item];
-
-            console.log(newAuthorFilter);
 
             const PL = state.FilterCriteria.isActiveGenre ? playlistWithGenreFilter : state.initialTracksForFilter;
 
@@ -198,7 +211,9 @@ export default function audioplayerReducer(state = initialState, action) {
                 filteredPlaylist: newFilteredPlaylist,
                 FilterCriteria: {
                     isActiveAuthor: true,
-                    author: newAuthorFilter 
+                    author: newAuthorFilter,
+                    isActiveGenre: state.FilterCriteria.isActiveGenre,
+                    genre: state.FilterCriteria.genre 
                 }
             }
 
