@@ -8,6 +8,7 @@ import * as S from './Track.styled';
 import { setCurrentTrack } from '../../store/audioplayer/actions';
 import { useAddFavTrackMutation, useDeleteFavTrackMutation } from '../../API/api-tracks';
 import { userContext } from '../../userContext';
+import { refreshToken } from '../../API/api-user';
 
 
 
@@ -23,22 +24,16 @@ export function GetTracks({ track, tracks, isLoading }) {
   ]
 
 
-  const { token, user } = useContext(userContext);
+  const { token, user, setToken } = useContext(userContext);
   
   const playingTrack = useSelector((store) => store.audioplayer.track)
   const isPlaying = useSelector((store) => store.audioplayer.playing)
   const dispatch = useDispatch();
-  const [addFavTrack] = useAddFavTrackMutation();
-  const [deleteFavTrack] = useDeleteFavTrackMutation();
+  const [addFavTrack, { error: likeError, isError: likeIsError }] = useAddFavTrackMutation();
+  const [deleteFavTrack, { error: dislikeError, isError: dislikeIsError }] = useDeleteFavTrackMutation();
 
   const likedByUser = Boolean(track.stared_user ? track?.stared_user?.find((staredUser) => staredUser.id === user.id) : []);
   const [isLiked, setIsLiked] = useState(false);
-
-
-
-  useEffect(() => {
-    setIsLiked(likedByUser);
-  }, [likedByUser, track]);
 
   async function handleLikeDislikeTrack (id) {
 
@@ -54,11 +49,36 @@ export function GetTracks({ track, tracks, isLoading }) {
     } else {
       setIsLiked(true);
       addFavTrack({ id, Mass });
-
     }
-
-
   }
+
+  const getNewToken = async () => {
+
+    const newAccessToken = await refreshToken({ token: token.refresh });
+    setToken({ access: newAccessToken, refresh: token.refresh });
+    console.log(isLiked);
+    handleLikeDislikeTrack (track.id)
+    
+  }
+
+  if (likeIsError && likeError.status === 401) {
+    getNewToken();
+  }
+
+  if (dislikeIsError && dislikeError.status === 401) {
+    getNewToken();
+  }
+
+  useEffect(() => {
+    setIsLiked(likedByUser);
+  }, [likedByUser, track]);
+
+  
+
+
+
+
+
 
   if (isLoading) {
     return (

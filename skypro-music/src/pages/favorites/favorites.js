@@ -27,7 +27,7 @@ export default function Favorites() {
 
   const getNewToken = async () => {
     const newAccessToken = await refreshToken({ token: token.refresh });
-    setToken({ access: newAccessToken });
+    setToken({ access: newAccessToken, refresh: token.refresh });
     refetch();
   }
   
