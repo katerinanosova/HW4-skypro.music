@@ -1,11 +1,11 @@
-import { useContext,  useEffect,  useState } from "react";
+import {   useEffect,  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Filter from "./Filter";
 import { GetTracks } from "./Track";
 import * as S from './Tracklist.styled';
 import { useGetAllTracksQuery } from "../../API/api-tracks";
-import { userContext } from "../../userContext";
-import { refreshToken } from "../../API/api-user";
+// import { userContext } from "../../userContext";
+// import { refreshToken } from "../../API/api-user";
 import { setInitialTracksForFilter, setSearch } from "../../store/audioplayer/actions";
 
 
@@ -18,7 +18,7 @@ import { setInitialTracksForFilter, setSearch } from "../../store/audioplayer/ac
 
 export default function Tracklist() {
 
-  const { token, setToken } = useContext(userContext);
+  // const { token, setToken } = useContext(userContext);
 
   const { data = [], error, isLoading, isSuccess } = useGetAllTracksQuery();
     
@@ -32,10 +32,11 @@ export default function Tracklist() {
   const filteredByAuthor = useSelector((store) => store.audioplayer.FilterCriteria.isActiveAuthor);
   const isSorted = useSelector((store) => store.audioplayer.FilterCriteria.isActiveSort)
 
-  const getNewToken = async () => {
-    const newAccessToken = await refreshToken({ token: token.refresh });
-      setToken({ access: newAccessToken });
-  }
+  // const getNewToken = async () => {
+  //   const newAccessToken = await refreshToken({ token: token.refresh });
+  //     setToken({ access: newAccessToken });
+  //     refetch();
+  // }
 
   const genres = [...new Set(data.map(track => track.genre))];
   const author = [...new Set(data.map(track => track.author))];
@@ -49,7 +50,6 @@ export default function Tracklist() {
 
 
   const filteredData = (filteredByGenre || filteredByAuthor || isSorted) ? filteredTrackList : initialTracksForFilter;
-  console.log(filteredData);
 
   return (
       <S.MainCenterblock>
@@ -85,7 +85,7 @@ export default function Tracklist() {
           <S.ContentPlaylist>
             {error && error}
             {!error && filteredData.map((track) => (
-              <GetTracks key={track.id} track={track} tracks={filteredData} isLoading={isLoading} getNewToken={getNewToken}  />
+              <GetTracks key={track.id} track={track} tracks={filteredData} isLoading={isLoading} />
             ))}
 
           </S.ContentPlaylist>

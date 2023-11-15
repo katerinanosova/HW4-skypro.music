@@ -1,4 +1,7 @@
-import { useContext, useEffect } from "react";
+import { useContext, 
+  // useEffect  
+ } from "react";
+// import { useNavigate } from "react-router-dom";
 import { useGetFavTracksQuery } from "../../API/api-tracks";
 import { refreshToken } from "../../API/api-user";
 import { GetTracks } from "../../Components/Tracklist/Track";
@@ -7,30 +10,38 @@ import { userContext } from "../../userContext";
 
 
 
+
 export default function Favorites() {
 
-  const { token, setToken } = useContext(userContext);
+  const { token, 
+    setToken, 
+    // setUser 
+  } = useContext(userContext);
   const Mass = {
     Authorization: `Bearer ${token.access}`,
     "content-type": "application/json"
   }
 
-  const { data = [], isLoading, isError, error } = useGetFavTracksQuery(Mass);
+  // const navigate = useNavigate();
+  const { data = [], isLoading, isError, error, refetch } = useGetFavTracksQuery(Mass);
 
   const getNewToken = async () => {
     const newAccessToken = await refreshToken({ token: token.refresh });
-    setToken({ access: newAccessToken })
+    setToken({ access: newAccessToken });
+    refetch();
   }
   
   
-
-  useEffect(() => {
-      if (isError) {
-        if (error.status === 401) {
+  // useEffect(() => {
+      if (isError && error.status === 401) {
           getNewToken();
-        }
+          // setUser(null);
+          // setToken(null);
+          // window.localStorage.removeItem('user');
+          // window.localStorage.removeItem('token');
+          // navigate('/login');
       }
-    }, [isError, error])
+    // }, [isError, error])
     
 
 
@@ -60,11 +71,10 @@ export default function Favorites() {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-          {error && error}
-            {!error && data.map((track) => (
-              <GetTracks key={track.id} track={track} tracks={data} isLoading={isLoading} getNewToken={getNewToken}  />
+          {/* {error && error} */}
+            {!isError && data.map((track) => (
+              <GetTracks key={track.id} track={track} tracks={data} isLoading={isLoading} />
             ))}
-
             {/* <GetTracks isLoading={isLoading} tracks={data} getNewToken={getNewToken}
                      getTracksError={error ? error.data.detail : ''}/>  */}
           </S.ContentPlaylist>
