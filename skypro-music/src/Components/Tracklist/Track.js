@@ -1,6 +1,8 @@
 /* eslint-disable object-shorthand */
 import { useDispatch, useSelector } from 'react-redux';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, 
+  useState
+ } from 'react';
 import getTrackDuration from '../../helpers';
 import * as S from './Track.styled';
 import { setCurrentTrack } from '../../store/audioplayer/actions';
@@ -35,7 +37,7 @@ export function GetTracks({ track, tracks, isLoading }) {
 
 
   useEffect(() => {
-    setIsLiked(likedByUser)
+    setIsLiked(likedByUser);
   }, [likedByUser, track]);
 
   async function handleLikeDislikeTrack (id) {

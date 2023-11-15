@@ -1,13 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as S from './AudioPlayer.styled'
 import ProgressBar from './ProgressBar';
 import { nextTrack, prevTrack, shuffle, startPause, startPlaying } from '../../store/audioplayer/actions';
-import { useGetAllTracksQuery } from '../../API/api-tracks';
+import { useAddFavTrackMutation, useDeleteFavTrackMutation, useGetAllTracksQuery } from '../../API/api-tracks';
+import { userContext } from '../../userContext';
 
 
 
 export default function AudioPlayer() {
+
+  const { token, user } = useContext(userContext);
 
     const { isLoading } = useGetAllTracksQuery();
 
@@ -18,6 +21,8 @@ export default function AudioPlayer() {
     const [isLoop, setIsLoop] = useState(false);
     const [volume, setVolume] = useState(0.25);
     const dispatch = useDispatch();
+    const [addFavTrack] = useAddFavTrackMutation();
+    const [deleteFavTrack] = useDeleteFavTrackMutation();
     
     const track = useSelector((store) => store.audioplayer.track);
     const isPlaying = useSelector((store) => store.audioplayer.playing);
@@ -101,6 +106,30 @@ export default function AudioPlayer() {
       }
 
     }
+
+  const likedByUser = Boolean(track?.stared_user ? track?.stared_user?.find((staredUser) => staredUser.id === user.id) : []);
+  const [isLiked, setIsLiked] = useState(false);
+
+  console.log(isLiked);
+
+  useEffect(() => {
+    setIsLiked(likedByUser);
+  }, [likedByUser, track]);
+
+    const Mass = {
+      Authorization: `Bearer ${token.access}`,
+      "content-type": "application/json"
+    }
+
+    const likeTrack = (id) => {
+      setIsLiked(true);
+      addFavTrack({ id, Mass });
+    }
+
+    const dislikeTrack = (id) => {
+      setIsLiked(false);
+      deleteFavTrack({ id, Mass });
+    }
     
 
 
@@ -171,12 +200,12 @@ export default function AudioPlayer() {
                 </S.TrackPlayAlbum>
               </S.TrackPlayContain>
               <S.TrackPlayLikeDis>
-                <S.TrackPlayLike className="_btn-icon">
+                <S.TrackPlayLike className="_btn-icon" onClick={() => likeTrack(track.id)}>
                   <S.TrackPlayLikeSvg alt="like">
                     <use xlinkHref="img/icon/sprite.svg#icon-like" />
                   </S.TrackPlayLikeSvg>
                 </S.TrackPlayLike>
-                <S.TrackPlayDislike className="_btn-icon">
+                <S.TrackPlayDislike className="_btn-icon" onClick={() => dislikeTrack(track.id)}>
                   <S.TrackPlayDislikeSvg alt="dislike">
                     <use xlinkHref="img/icon/sprite.svg#icon-dislike" />
                   </S.TrackPlayDislikeSvg>
