@@ -35,11 +35,6 @@ export default function Favorites() {
   // useEffect(() => {
       if (isError && error.status === 401) {
           getNewToken();
-          // setUser(null);
-          // setToken(null);
-          // window.localStorage.removeItem('user');
-          // window.localStorage.removeItem('token');
-          // navigate('/login');
       }
     // }, [isError, error])
     

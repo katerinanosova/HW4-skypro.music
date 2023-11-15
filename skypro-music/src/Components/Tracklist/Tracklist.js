@@ -83,7 +83,7 @@ export default function Tracklist() {
             </S.PlaylistTitleCol04>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            {error && error}
+            {/* {error && error} */}
             {!error && filteredData.map((track) => (
               <GetTracks key={track.id} track={track} tracks={filteredData} isLoading={isLoading} />
             ))}
