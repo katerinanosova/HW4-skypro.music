@@ -12,7 +12,8 @@ export const tracksApi = createApi({
     }),
     endpoints: (builder) => ({
         getAllTracks: builder.query({
-            query: () => 'catalog/track/all/'
+            query: () => 'catalog/track/all/',
+            providesTags: ['Tracks']
         }),
 
         getFavTracks: builder.query({

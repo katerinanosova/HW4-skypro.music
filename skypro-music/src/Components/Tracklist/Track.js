@@ -29,12 +29,14 @@ export function GetTracks({ track, tracks, isLoading }) {
   const [addFavTrack] = useAddFavTrackMutation();
   const [deleteFavTrack] = useDeleteFavTrackMutation();
 
-  const likedByUser = Boolean(track?.stared_user?.find((staredUser) => staredUser.id === user.id))
-  const [isLiked, setIsLiked] = useState(likedByUser);
+  const likedByUser = Boolean(track.stared_user ? track?.stared_user?.find((staredUser) => staredUser.id === user.id) : []);
+  const [isLiked, setIsLiked] = useState(false);
+
+
 
   useEffect(() => {
     setIsLiked(likedByUser)
-  }, [likedByUser]);
+  }, [likedByUser, track]);
 
   async function handleLikeDislikeTrack (id) {
 

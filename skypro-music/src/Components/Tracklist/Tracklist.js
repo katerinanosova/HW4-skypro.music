@@ -49,7 +49,7 @@ export default function Tracklist() {
 
 
   const filteredData = (filteredByGenre || filteredByAuthor || isSorted) ? filteredTrackList : initialTracksForFilter;
-
+  console.log(filteredData);
 
   return (
       <S.MainCenterblock>
