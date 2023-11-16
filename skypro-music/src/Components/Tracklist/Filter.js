@@ -18,9 +18,6 @@ export default function Filter ({ type, filterOptions, filterName, tracks, isAct
     //     dispatch(setFilter({ item, name, tracks }))
     // }
 
-   console.log(filterOptions);
-
-
     return (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <S.FilterButton $isActive={isActive} className='_btn-text' onClick={isActive ? onHide : onShow} type='button'>
