@@ -1,21 +1,24 @@
 /* eslint-disable react/no-array-index-key */
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { useState } from 'react';
 import * as S from './Filter.styled';
-import { setFilter } from '../../store/audioplayer/actions';
+// import { setFilter } from '../../store/audioplayer/actions';
+import FilterItemComponent from './FilterItem';
 
 
 export default function Filter ({ type, filterOptions, filterName, tracks, isActive, onShow, onHide }) {
 
-    const dispatch = useDispatch();
-    const [isFilter, setIsFilter] = useState(false);
+    // const dispatch = useDispatch();
+    // const [isFilter, setIsFilter] = useState(false);
 
 
 
-    const toggleFilter = ({ item, name }) => {
-        setIsFilter(!isFilter);
-        dispatch(setFilter({ item, name, tracks }))
-    }
+    // const toggleFilter = ({ item, name }) => {
+    //     setIsFilter(!isFilter);
+    //     dispatch(setFilter({ item, name, tracks }))
+    // }
+
+   console.log(filterOptions);
 
 
     return (
@@ -24,9 +27,17 @@ export default function Filter ({ type, filterOptions, filterName, tracks, isAct
             {type}
             {isActive ? 
             <S.FilterOption>
-                {filterOptions.map((item, index) =>
-                <S.FilterItem key={index} onClick={() => toggleFilter({ item, name: filterName, tracks })} $isFilter={isFilter}>{item}</S.FilterItem>)}
+                {filterOptions.map((filterItem) =>
+                (
+                <FilterItemComponent key={filterItem} filterItem={filterItem} tracks={tracks} filterName={filterName}/>
+                )
+
+                // <S.FilterItem key={index} onClick={() => toggleFilter({ item, name: filterName, tracks })} $isFilter={isFilter}>{item}</S.FilterItem>
+                )
+                }
             </S.FilterOption> 
             : ''}
         </S.FilterButton>)  
 }
+
+

@@ -68,7 +68,9 @@ export default function Tracklist() {
         <S.CenterblockFilter>
           <S.FilterTitle>Искать по:</S.FilterTitle>
           <Filter type='исполнителю' filterName='author' filterOptions={author} tracks={filteredData} isActive={activeIndex === 1} onShow={() => setActiveIndex(1)} onHide={() => setActiveIndex(0)} />
+
           <Filter type='году выпуска' filterName='release_date' filterOptions={years} tracks={filteredData} isActive={activeIndex === 2} onShow={() => setActiveIndex(2)} onHide={() => setActiveIndex(0)} />
+          
           <Filter type='жанру' filterName='genre' filterOptions={genres} tracks={filteredData} isActive={activeIndex === 3} onShow={() => setActiveIndex(3)} onHide={() => setActiveIndex(0)} />          
         </S.CenterblockFilter>
         <S.CenterblockContent>
