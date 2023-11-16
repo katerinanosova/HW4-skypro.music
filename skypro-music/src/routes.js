@@ -5,8 +5,11 @@ import Categories from "./pages/categoties/categories";
 import MainPage from "./pages/main/main-page";
 import ProtectedRoute from "./Components/protected-route";
 import AuthPage from "./pages/AuthPage/AuthPage";
+import Layout from "./Components/Layout/layout";
 
-export default function AppRoutes ({ user, loading, tracks, getTracksError, currentTrack, setCurrentTrack }) {
+
+export default function AppRoutes () {
+
     
     return (
         <Routes>
@@ -15,15 +18,20 @@ export default function AppRoutes ({ user, loading, tracks, getTracksError, curr
                         
             <Route path="*" element={<NotFound />} />
 
-            <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
-                <Route path="/" element={<MainPage
-                    loading={loading}
-                    tracks={tracks}
-                    getTracksError={getTracksError}
-                    currentTrack={currentTrack}
-                    setCurrentTrack={setCurrentTrack} />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/categories/:id" element={<Categories />} />
+            <Route element={<ProtectedRoute />}>
+                <Route path="/" element={<Layout 
+                // loading={loading}
+                 />}>
+                    <Route index element={<MainPage
+                        // tracks={tracks}
+                        // getTracksError={getTracksError}
+                        />} />
+                    <Route path="favorites" element={<Favorites
+                            // tracks={tracks}
+                            // getTracksError={getTracksError}
+                             />} />
+                    <Route path="categories/:id" element={<Categories />} />
+                </Route>
             </Route>
                                 
         </Routes>

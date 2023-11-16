@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 
 
 export const FilterItem = styled.option`
+color: ${({ $isFilter }) => ($isFilter ? '#B672FF' : '#ffffff')};
 &:hover {
     color: #B672FF;
     text-decoration: underline;
@@ -9,7 +10,8 @@ export const FilterItem = styled.option`
 `
 
 export const FilterOption = styled.div`
-width: 248px;
+width: 275px;
+max-height: 275px;
 background-color: #313131;
 color: #ffffff;
 border-radius: 12px;
@@ -24,6 +26,13 @@ left: -20px;
 bottom: -10px;
 font-size: 20px;
 line-height: 24px;
+overflow-y: auto;
+overflow-x: hidden;
+
+
+&::-webkit-scrollbar {
+  width: 5px;
+}
 `
 
 export const FilterButton = styled.div`
