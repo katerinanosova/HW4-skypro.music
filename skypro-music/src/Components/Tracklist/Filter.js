@@ -35,8 +35,6 @@ export default function Filter ({ type, filterOptions, filterName, tracks, isAct
                 (
                 <FilterItemComponent key={filterItem} $isFilter={filterCriteria[filterName]?.includes(filterItem)} filterItem={filterItem} tracks={tracks} filterName={filterName}/>
                 )
-
-                // <S.FilterItem key={index} onClick={() => toggleFilter({ item, name: filterName, tracks })} $isFilter={isFilter}>{item}</S.FilterItem>
                 )
                 }
             </S.FilterOption> 
