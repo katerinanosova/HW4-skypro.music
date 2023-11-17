@@ -57,16 +57,16 @@ export function GetTracks({ track, tracks, isLoading }) {
     const newAccessToken = await refreshToken({ token: token.refresh });
     setToken({ access: newAccessToken, refresh: token.refresh });
     console.log(isLiked);
-    handleLikeDislikeTrack (track.id)
-    
   }
 
   if (likeIsError && likeError.status === 401) {
     getNewToken();
+    handleLikeDislikeTrack (track.id)
   }
 
   if (dislikeIsError && dislikeError.status === 401) {
     getNewToken();
+    handleLikeDislikeTrack (track.id)
   }
 
   useEffect(() => {
