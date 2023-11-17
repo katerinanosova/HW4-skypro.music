@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 // import { useDispatch } from 'react-redux';
 // import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import * as S from './Filter.styled';
 // import { setFilter } from '../../store/audioplayer/actions';
 import FilterItemComponent from './FilterItem';
@@ -8,25 +9,31 @@ import FilterItemComponent from './FilterItem';
 
 export default function Filter ({ type, filterOptions, filterName, tracks, isActive, onShow, onHide }) {
 
-    // const dispatch = useDispatch();
-    // const [isFilter, setIsFilter] = useState(false);
+
+    const filterCriteria = useSelector((store) => store.audioplayer.FilterCriteria)
+
+
+    const count = filterCriteria[filterName]?.length
 
 
 
-    // const toggleFilter = ({ item, name }) => {
-    //     setIsFilter(!isFilter);
-    //     dispatch(setFilter({ item, name, tracks }))
-    // }
 
     return (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+        <div>
+        
         <S.FilterButton $isActive={isActive} className='_btn-text' onClick={isActive ? onHide : onShow} type='button'>
+            
+            {filterName !== 'release_date' && count > 0 && (
+                <S.FilterCount>{count}</S.FilterCount>
+            )}
+            
             {type}
             {isActive ? 
             <S.FilterOption>
                 {filterOptions.map((filterItem) =>
                 (
-                <FilterItemComponent key={filterItem} filterItem={filterItem} tracks={tracks} filterName={filterName}/>
+                <FilterItemComponent key={filterItem} $isFilter={filterCriteria[filterName]?.includes(filterItem)} filterItem={filterItem} tracks={tracks} filterName={filterName}/>
                 )
 
                 // <S.FilterItem key={index} onClick={() => toggleFilter({ item, name: filterName, tracks })} $isFilter={isFilter}>{item}</S.FilterItem>
@@ -34,7 +41,9 @@ export default function Filter ({ type, filterOptions, filterName, tracks, isAct
                 }
             </S.FilterOption> 
             : ''}
-        </S.FilterButton>)  
+        </S.FilterButton>
+        </div>
+        )  
 }
 
 

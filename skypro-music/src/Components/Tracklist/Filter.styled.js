@@ -49,6 +49,8 @@ appearance: none;
 width: 144px;
 height: 39px;
 background-color: #181818;
+position: relative;
+margin-right: 10px;
 &:not(:last-child) {
     margin-right: 10px;
   }
@@ -63,3 +65,20 @@ background-color: #181818;
   cursor: pointer;
 }
 `
+
+export const FilterCount = styled.div`
+  background-color: #ad61ff;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 13px; /* 100% */
+`;

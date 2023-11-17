@@ -12,6 +12,7 @@ const initialState = {
         isActiveAuthor: false,
         genre: [],
         isActiveGenre: false,
+        release_date: [],
         isActiveSort: false
     },
     initialTracksForFilter: [],
@@ -223,6 +224,7 @@ export default function audioplayerReducer(state = initialState, action) {
                         filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(a.release_date) - new Date(b.release_date)),
                         FilterCriteria: {
                             isActiveSort: true,
+                            release_date: action.payload.item,
                             isActiveAuthor: state.FilterCriteria.isActiveAuthor,
                             author: state.FilterCriteria.author,
                             isActiveGenre: state.FilterCriteria.isActiveGenre,
@@ -236,6 +238,7 @@ export default function audioplayerReducer(state = initialState, action) {
                         filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(b.release_date) - new Date(a.release_date)),
                         FilterCriteria: {
                             isActiveSort: true,
+                            release_date: action.payload.item,
                             isActiveAuthor: state.FilterCriteria.isActiveAuthor,
                             author: state.FilterCriteria.author,
                             isActiveGenre: state.FilterCriteria.isActiveGenre,
@@ -249,6 +252,7 @@ export default function audioplayerReducer(state = initialState, action) {
                         filteredPlaylist: currentPlaylist.slice().sort((a, b) => new Date(a.id) - new Date(b.id)),
                         FilterCriteria: {
                             isActiveSort: false,
+                            release_date: action.payload.item,
                             isActiveAuthor: state.FilterCriteria.isActiveAuthor,
                             author: state.FilterCriteria.author,
                             isActiveGenre: state.FilterCriteria.isActiveGenre,

@@ -110,10 +110,11 @@ export default function AudioPlayer() {
   const likedByUser = Boolean(track?.stared_user ? track?.stared_user?.find((staredUser) => staredUser.id === user.id) : []);
   const [isLiked, setIsLiked] = useState(false);
 
-  console.log(isLiked);
+  
 
   useEffect(() => {
     setIsLiked(likedByUser);
+    console.log(isLiked);
   }, [likedByUser, track]);
 
     const Mass = {
