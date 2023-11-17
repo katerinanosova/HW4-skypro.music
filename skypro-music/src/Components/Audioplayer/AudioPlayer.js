@@ -5,12 +5,13 @@ import ProgressBar from './ProgressBar';
 import { nextTrack, prevTrack, shuffle, startPause, startPlaying } from '../../store/audioplayer/actions';
 import { useAddFavTrackMutation, useDeleteFavTrackMutation, useGetAllTracksQuery } from '../../API/api-tracks';
 import { userContext } from '../../userContext';
+import { refreshToken } from '../../API/api-user';
 
 
 
 export default function AudioPlayer() {
 
-  const { token, user } = useContext(userContext);
+  const { token, user, setToken } = useContext(userContext);
 
     const { isLoading } = useGetAllTracksQuery();
 
@@ -21,8 +22,8 @@ export default function AudioPlayer() {
     const [isLoop, setIsLoop] = useState(false);
     const [volume, setVolume] = useState(0.25);
     const dispatch = useDispatch();
-    const [addFavTrack] = useAddFavTrackMutation();
-    const [deleteFavTrack] = useDeleteFavTrackMutation();
+    const [addFavTrack, { error: likeError, isError: likeIsError }] = useAddFavTrackMutation();
+    const [deleteFavTrack, { error: dislikeError, isError: dislikeIsError }] = useDeleteFavTrackMutation();
     
     const track = useSelector((store) => store.audioplayer.track);
     const isPlaying = useSelector((store) => store.audioplayer.playing);
@@ -110,12 +111,11 @@ export default function AudioPlayer() {
   const likedByUser = Boolean(track?.stared_user ? track?.stared_user?.find((staredUser) => staredUser.id === user.id) : []);
   const [isLiked, setIsLiked] = useState(false);
 
+
+
   
 
-  useEffect(() => {
-    setIsLiked(likedByUser);
-    console.log(isLiked);
-  }, [likedByUser, track]);
+
 
     const Mass = {
       Authorization: `Bearer ${token.access}`,
@@ -131,6 +131,28 @@ export default function AudioPlayer() {
       setIsLiked(false);
       deleteFavTrack({ id, Mass });
     }
+
+    const getNewToken = async () => {
+
+      const newAccessToken = await refreshToken({ token: token.refresh });
+      setToken({ access: newAccessToken, refresh: token.refresh });
+      console.log(isLiked);
+    }
+
+    if (likeIsError && likeError.status === 401) {
+      getNewToken();
+      likeTrack(track.id);
+    }
+  
+    if (dislikeIsError && dislikeError.status === 401) {
+      getNewToken();
+      dislikeTrack(track.id)
+    }
+
+    useEffect(() => {
+      setIsLiked(likedByUser);
+      console.log(isLiked);
+    }, [likedByUser, track]);
     
 
 
