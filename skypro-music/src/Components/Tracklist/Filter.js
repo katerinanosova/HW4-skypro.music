@@ -3,7 +3,6 @@
 // import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as S from './Filter.styled';
-// import { setFilter } from '../../store/audioplayer/actions';
 import FilterItemComponent from './FilterItem';
 
 

@@ -271,8 +271,8 @@ export default function audioplayerReducer(state = initialState, action) {
         }
 
         case SEARCH: {
-            const currentPlaylist = action.payload.tracks;
-
+             const currentPlaylist = action.payload.tracks;
+            
             if (action.payload.value.length > 0) {
                 const searchedPlaylist = currentPlaylist.filter((item) => 
                 item.name
