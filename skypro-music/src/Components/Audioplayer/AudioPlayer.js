@@ -29,6 +29,10 @@ export default function AudioPlayer() {
     const isPlaying = useSelector((store) => store.audioplayer.playing);
     const shuffled = useSelector((store) => store.audioplayer.shuffled);
 
+    useEffect(() => {
+      console.log('track = =', track);
+    }, [track]);
+
     const toggleShuffle = () => {
       dispatch(shuffle());
     }
@@ -111,12 +115,6 @@ export default function AudioPlayer() {
   const likedByUser = Boolean(track?.stared_user ? track?.stared_user?.find((staredUser) => staredUser.id === user.id) : []);
   const [isLiked, setIsLiked] = useState(false);
 
-
-    
-  
-
-
-
     const Mass = {
       Authorization: `Bearer ${token.access}`,
       "content-type": "application/json"
@@ -152,7 +150,7 @@ export default function AudioPlayer() {
     useEffect(() => {
       setIsLiked(likedByUser);
       console.log(isLiked);
-    }, [likedByUser, track]);
+    }, [likedByUser, track, track?.stared_user]);
     
 
 

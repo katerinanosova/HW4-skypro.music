@@ -37,7 +37,8 @@ export default function audioplayerReducer(state = initialState, action) {
         case SET_INITIAL_TRACKS: {
             return {
                 ...state,
-                initialTracksForFilter: action.payload.data
+                initialTracksForFilter: action.payload.data,
+                initialTracksForSearch: action.payload.data
             }
         }
 
@@ -122,7 +123,8 @@ export default function audioplayerReducer(state = initialState, action) {
                                 genre: newGenresFilter,
                                 isActiveAuthor: state.FilterCriteria.isActiveAuthor,
                                 author: state.FilterCriteria.author
-                            }
+                            },
+                            initialTracksForSearch: newFilteredPlaylist
                         }
                     }
                     
@@ -134,7 +136,8 @@ export default function audioplayerReducer(state = initialState, action) {
                             genre: newGenresFilter,
                             isActiveAuthor: state.FilterCriteria.isActiveAuthor,
                             author: state.FilterCriteria.author
-                        }
+                        },
+                        initialTracksForSearch: state.FilterCriteria.isActiveAuthor ? playlistWithAuthorFilter : state.initialTracksForSearch
                     }
                     
                 }
@@ -154,7 +157,8 @@ export default function audioplayerReducer(state = initialState, action) {
                         genre: newGenresFilter,
                         isActiveAuthor: state.FilterCriteria.isActiveAuthor,
                         author: state.FilterCriteria.author
-                    }
+                    },
+                    initialTracksForSearch: newFilteredPlaylist
                 }
                 
             }
@@ -179,7 +183,8 @@ export default function audioplayerReducer(state = initialState, action) {
                             author: newAuthorFilter,
                             isActiveGenre: state.FilterCriteria.isActiveGenre,
                             genre: state.FilterCriteria.genre
-                        }
+                        },
+                        initialTracksForSearch: newFilteredPlaylist
                     }
                 }
 
@@ -191,7 +196,8 @@ export default function audioplayerReducer(state = initialState, action) {
                         author: newAuthorFilter,
                         isActiveGenre: state.FilterCriteria.isActiveGenre,
                         genre: state.FilterCriteria.genre
-                    }
+                    },
+                    initialTracksForSearch: state.FilterCriteria.isActiveGenre ? playlistWithGenreFilter : state.initialTracksForSearch
                 }
             }
 
@@ -211,7 +217,8 @@ export default function audioplayerReducer(state = initialState, action) {
                     author: newAuthorFilter,
                     isActiveGenre: state.FilterCriteria.isActiveGenre,
                     genre: state.FilterCriteria.genre 
-                }
+                },
+                initialTracksForSearch: newFilteredPlaylist
             }
 
 
@@ -229,7 +236,8 @@ export default function audioplayerReducer(state = initialState, action) {
                             author: state.FilterCriteria.author,
                             isActiveGenre: state.FilterCriteria.isActiveGenre,
                             genre: state.FilterCriteria.genre 
-                        }
+                        },
+                        initialTracksForSearch: currentPlaylist.slice().sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
                     }
                 }
                 if (action.payload.item === 'Сначала новые') {
@@ -243,7 +251,8 @@ export default function audioplayerReducer(state = initialState, action) {
                             author: state.FilterCriteria.author,
                             isActiveGenre: state.FilterCriteria.isActiveGenre,
                             genre: state.FilterCriteria.genre 
-                        }
+                        },
+                        initialTracksForSearch: currentPlaylist.slice().sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
                     }
                 }
                 if (action.payload.item === 'По умолчанию') {
@@ -257,7 +266,8 @@ export default function audioplayerReducer(state = initialState, action) {
                             author: state.FilterCriteria.author,
                             isActiveGenre: state.FilterCriteria.isActiveGenre,
                             genre: state.FilterCriteria.genre 
-                        }
+                        },
+                        initialTracksForSearch: currentPlaylist.slice().sort((a, b) => new Date(a.id) - new Date(b.id))
                     }
                 }
             }
@@ -271,9 +281,9 @@ export default function audioplayerReducer(state = initialState, action) {
         }
 
         case SEARCH: {
-             const currentPlaylist = action.payload.tracks;
+             const currentPlaylist = state.initialTracksForSearch;
             
-            if (action.payload.value.length > 0) {
+
                 const searchedPlaylist = currentPlaylist.filter((item) => 
                 item.name
                 .toLocaleLowerCase()
@@ -290,9 +300,7 @@ export default function audioplayerReducer(state = initialState, action) {
                     ...state,
                     initialTracksForFilter: searchedPlaylist,
                 }
-            }
 
-            return state
         }
 
         default:
