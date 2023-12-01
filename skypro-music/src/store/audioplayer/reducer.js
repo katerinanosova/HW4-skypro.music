@@ -142,7 +142,9 @@ export default function audioplayerReducer(state = initialState, action) {
                     
                 }
 
-                const newGenresFilter = [...state.FilterCriteria.genre, action.payload.item];
+                const newGenresFilter = [...state.FilterCriteria.genre, action.payload.item].flat(Infinity);
+                const uniqueGenres = new Set(newGenresFilter)
+                const newGenresFilter1 = [...uniqueGenres];
 
                 const PL = state.FilterCriteria.isActiveAuthor ? playlistWithAuthorFilter : state.initialTracksForFilter;
 
@@ -154,7 +156,7 @@ export default function audioplayerReducer(state = initialState, action) {
                     filteredPlaylist: newFilteredPlaylist,
                     FilterCriteria: {
                         isActiveGenre: true,
-                        genre: newGenresFilter,
+                        genre: newGenresFilter1,
                         isActiveAuthor: state.FilterCriteria.isActiveAuthor,
                         author: state.FilterCriteria.author
                     },
@@ -202,7 +204,9 @@ export default function audioplayerReducer(state = initialState, action) {
             }
 
             
-            const newAuthorFilter = [...state.FilterCriteria.author, action.payload.item];
+            const newAuthorFilter = [...state.FilterCriteria.author, action.payload.item].flat(Infinity);
+            const uniqueAuthor = new Set(newAuthorFilter);
+            const newAuthorFilter1 = [...uniqueAuthor];
 
             const PL = state.FilterCriteria.isActiveGenre ? playlistWithGenreFilter : state.initialTracksForFilter;
 
@@ -214,7 +218,7 @@ export default function audioplayerReducer(state = initialState, action) {
                 filteredPlaylist: newFilteredPlaylist,
                 FilterCriteria: {
                     isActiveAuthor: true,
-                    author: newAuthorFilter,
+                    author: newAuthorFilter1,
                     isActiveGenre: state.FilterCriteria.isActiveGenre,
                     genre: state.FilterCriteria.genre 
                 },

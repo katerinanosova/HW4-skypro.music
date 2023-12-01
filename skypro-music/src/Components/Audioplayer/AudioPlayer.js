@@ -15,7 +15,6 @@ export default function AudioPlayer() {
 
     const { isLoading } = useGetAllTracksQuery();
 
-    // const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);

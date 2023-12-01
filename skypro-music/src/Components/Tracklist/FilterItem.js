@@ -15,6 +15,6 @@ export default function FilterItemComponent ({ tracks, filterName, filterItem, $
 
 
     return (
-        <S.FilterItem onClick={() => toggleFilter({ item: filterItem, name: filterName, tracks })} $isFilter={$isFilter}>{filterItem}</S.FilterItem>
+        <S.FilterItem onClick={() => toggleFilter({ item: filterItem, name: filterName })} $isFilter={$isFilter}>{filterItem}</S.FilterItem>
     )
 }

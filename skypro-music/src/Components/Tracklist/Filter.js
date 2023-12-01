@@ -13,6 +13,8 @@ export default function Filter ({ type, filterOptions, filterName, tracks, isAct
 
 
     const count = filterCriteria[filterName]?.length
+    console.log(filterCriteria[filterName]);
+   
 
 
 
